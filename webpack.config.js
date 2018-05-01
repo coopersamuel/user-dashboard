@@ -10,7 +10,7 @@ const paths = {
 };
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: path.join(paths.SRC, "index.js"),
     output : {
         path : paths.DIST,
@@ -71,6 +71,6 @@ module.exports = {
         extensions: [".js", ".jsx"]
     },
     devServer: {
-        port: 3000
+        port: 3001
     }
 };
