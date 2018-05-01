@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 // Constant with our paths
 const paths = {
@@ -9,10 +10,22 @@ const paths = {
 };
 
 module.exports = {
+    mode: 'production',
     entry: path.join(paths.SRC, "index.js"),
     output : {
         path : paths.DIST,
-        filename : 'bundle.js'
+        filename : '[name].bundle.js'
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor',
+                    chunks: 'all'
+                }
+            }
+        }
     },
     module: {
         rules: [
@@ -44,13 +57,14 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin([paths.DIST]),
         new HtmlWebpackPlugin({
             template: path.join(paths.SRC, "index.html"),
             filename: "./index.html",
             title: 'Pseudo-trello'
         }),
         new MiniCssExtractPlugin({
-            filename: "[name][hash].css"
+            filename: "[name].bundle.css"
         })
     ],
     resolve: {
