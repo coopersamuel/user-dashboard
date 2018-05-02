@@ -35,10 +35,14 @@ class Board extends React.Component {
         this.addTrailingList = this.addTrailingList.bind(this);
     }
 
-    addTrailingList() {
-        // Add an empty list and place the cursor in the name field
-        this.props.addList(null);
-        // figure out how to focus on the new list 
+    async addTrailingList() {
+        // Add an empty list
+        await this.props.addList(null);
+        
+        // Place the cursor in the new list
+        const id = _.findLast(this.props.lists).id;
+        const nextForm = document.getElementById(`input_${id}`);
+        nextForm.focus();
     }
 
     render() {
@@ -53,28 +57,28 @@ class Board extends React.Component {
                                 <div className='col-3'>
                                     {_.map(getColumn(lists, 0), (list) => {
                                         return (
-                                            <List name={list.name} newList={this.addTrailingList} />
+                                            <List name={list.name} listId={list.id} newList={this.addTrailingList} />
                                         );
                                     })}
                                 </div>
                                 <div className='col-3'>
                                     {_.map(getColumn(lists, 1), (list) => {
                                         return (
-                                            <List name={list.name} newList={this.addTrailingList} />
+                                            <List name={list.name} listId={list.id} newList={this.addTrailingList} />
                                         );
                                     })}
                                 </div>
                                 <div className='col-3'>
                                     {_.map(getColumn(lists, 2), (list) => {
                                         return (
-                                            <List name={list.name} newList={this.addTrailingList} />
+                                            <List name={list.name} listId={list.id} newList={this.addTrailingList} />
                                         );
                                     })}
                                 </div>
                                 <div className='col-3'>
                                     {_.map(getColumn(lists, 3), (list) => {
                                         return (
-                                            <List name={list.name} newList={this.addTrailingList} />
+                                            <List name={list.name} listId={list.id} newList={this.addTrailingList} />
                                         );
                                     })}
                                 </div>
@@ -86,7 +90,7 @@ class Board extends React.Component {
                             <div className='text-center py-4'><MdSentimentVerySatisfied size={60} /></div>
                             <div>Welcome to frello! Let's start with your first list</div>
                             <div className='text-center pt-4'>
-                                <button className='btn btn-light' onClick={() => this.props.addList(null)}>Create list</button>
+                                <button className='btn btn-light' onClick={() => this.addTrailingList()}>Create list</button>
                             </div>
                         </div>
                     }

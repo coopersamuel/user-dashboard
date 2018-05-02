@@ -33,7 +33,11 @@ class List extends React.Component {
                     <div className="input-group">
                         <form onSubmit={this.handleSubmit}>
                             <label>
-                                <input type="text" className="form-control list-name" placeholder="Create new list" value={this.state.name} onChange={this.handleChange} />
+                                <input  type="text" className="form-control list-name" 
+                                        placeholder="Create new list" 
+                                        value={this.state.name} 
+                                        onChange={this.handleChange}
+                                        id={`input_${this.props.listId}`} />
                             </label>
                         </form>
                         <div className="input-group-append pl-2 pt-1">
