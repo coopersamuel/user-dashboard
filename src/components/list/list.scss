@@ -7,3 +7,25 @@
         width: 100%;
     }
 }
+
+.form-control {
+    &.list-name {
+        border: none;
+        border-radius: 0;
+        background-color: #f7f7f7;
+    }
+}
+
+.form-control:focus {
+    &.list-name {
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        outline: none;
+    }
+}
+
+.btn {
+    &.list-menu {
+        opacity: .65;
+    }
+}
