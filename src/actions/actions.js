@@ -11,6 +11,16 @@ export const addList = (listName) => {
     };
 }
 
+export const editList = (name, listId) => {
+    return {
+        type: ActionTypes.EDIT_LIST,
+        payload: {
+            name,
+            listId
+        }
+    };
+}
+
 export const addCard = () => {
     return {
         // stuff here 

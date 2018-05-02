@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../card/card';
-import { MdMoreHoriz } from 'react-icons/lib/md';
+import { map } from 'lodash';
+import { MdMoreHoriz, MdAdd } from 'react-icons/lib/md';
 import './list.scss';
 
 class List extends React.Component {
@@ -8,7 +9,7 @@ class List extends React.Component {
         super(props);
 
         this.state = {
-            name: this.props.name ? this.props.name : ''
+            name: this.props.list.name ? this.props.list.name : ''
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,10 +24,12 @@ class List extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.newList();
+        this.props.editList(this.state.name, this.props.list.id);
     }
 
     render() {
+        let { list } = this.props;
+
         return (
             <div className='card mb-4 list-card'>
                 <div className='card-header'>
@@ -37,21 +40,31 @@ class List extends React.Component {
                                         placeholder="Create new list" 
                                         value={this.state.name} 
                                         onChange={this.handleChange}
-                                        id={`input_${this.props.listId}`} />
+                                        id={`input_${list.id}`} />
                             </label>
                         </form>
                         <div className="input-group-append pl-2 pt-1">
                             <span>
                                 <div className="btn btn-sm btn-light list-menu">
-                                    <MdMoreHoriz className="mb-1" />
+                                    {list.name &&
+                                        <MdMoreHoriz className="mb-1" />
+                                    ||
+                                        <MdAdd className="mb-1" onClick={this.handleSubmit} />
+                                    }
                                 </div>
                             </span>
                         </div>
                     </div>
                 </div>
-                <div className='card-body'>
-                    <Card />
-                </div>
+                {list.name && 
+                    <div className='card-body'>
+                        {map(list.cards, (card) => {
+                            return <Card card={card} />;
+                        })}
+
+                        <Card card={null} />
+                    </div>
+                }
             </div>
         );
     }

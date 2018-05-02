@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addList } from '../../actions/actions';
+import { addList, editList } from '../../actions/actions';
 
 import List from '../../components/list/list';
 import { MdSentimentVerySatisfied } from 'react-icons/lib/md';
@@ -54,34 +54,26 @@ class Board extends React.Component {
                     {!_.isEmpty(this.props.lists) &&
                         <div className='col-10'>
                             <div className='row'>
-                                <div className='col-3'>
-                                    {_.map(getColumn(lists, 0), (list) => {
-                                        return (
-                                            <List name={list.name} listId={list.id} newList={this.addTrailingList} />
-                                        );
-                                    })}
-                                </div>
-                                <div className='col-3'>
-                                    {_.map(getColumn(lists, 1), (list) => {
-                                        return (
-                                            <List name={list.name} listId={list.id} newList={this.addTrailingList} />
-                                        );
-                                    })}
-                                </div>
-                                <div className='col-3'>
-                                    {_.map(getColumn(lists, 2), (list) => {
-                                        return (
-                                            <List name={list.name} listId={list.id} newList={this.addTrailingList} />
-                                        );
-                                    })}
-                                </div>
-                                <div className='col-3'>
-                                    {_.map(getColumn(lists, 3), (list) => {
-                                        return (
-                                            <List name={list.name} listId={list.id} newList={this.addTrailingList} />
-                                        );
-                                    })}
-                                </div>
+                                {_.times(4, (index) => {
+                                    /* Print out four of these */
+                                    return (
+                                        <div className='col-3'>
+                                            {_.map(getColumn(lists, index), (list) => {
+                                                return (
+                                                    <List list={list} editList={(name, id) => {
+                                                        if (!list.name) {
+                                                            this.addTrailingList();
+                                                        } else {
+                                                            document.getElementById(`input_${id}`).blur();
+                                                        }
+                                                        
+                                                        this.props.editList(name, id);
+                                                    }} />
+                                                );
+                                            })}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     }
@@ -109,6 +101,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         addList,
+        editList
     }, dispatch);
 }
 

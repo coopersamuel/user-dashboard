@@ -1,5 +1,5 @@
 import * as ActionTypes from '../actions/actionTypes';
-import { slice, uniqueId } from 'lodash';
+import { cloneDeep, uniqueId } from 'lodash';
 
 export default (state = {}, action) => {
     const listId = uniqueId('list_');
@@ -14,6 +14,10 @@ export default (state = {}, action) => {
                     cards: []
                 }
             };
+        case ActionTypes.EDIT_LIST:
+            let newState = cloneDeep(state);
+            newState[action.payload.listId].name = action.payload.name;
+            return newState;
         default:
             return state;
     }

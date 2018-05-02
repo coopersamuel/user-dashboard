@@ -4,3 +4,25 @@
         border-bottom: none;
     }
 }
+
+.form-control {
+    &.card-message {
+        border: none;
+        border-radius: 0;
+        background-color: #f7f7f7;
+    }
+}
+
+.form-control:focus {
+    &.card-message {
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        outline: none;
+    }
+}
+
+.btn {
+    &.card-menu {
+        opacity: .65;
+    }
+}
