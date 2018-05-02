@@ -1,4 +1,5 @@
 import React from 'react';
+import Card from '../card/card';
 import './list.scss';
 
 class List extends React.Component {
@@ -8,12 +9,12 @@ class List extends React.Component {
 
     render() {
         return (
-            <div className='card list-card'>
+            <div className='card mb-4 list-card'>
                 <div className='card-header'>
-                    List Name
+                    {this.props.name}
                 </div>
                 <div className='card-body'>
-                    Cards Here
+                    <Card />
                 </div>
             </div>
         );
