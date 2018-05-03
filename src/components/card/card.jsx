@@ -22,7 +22,9 @@ class Card extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.editCard(this.state.message, this.props.card.id);
+        if (this.state.message) {
+            this.props.editCard(this.state.message, this.props.card.id);
+        }
     }
 
     render() {

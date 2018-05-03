@@ -24,7 +24,10 @@ class List extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.editList(this.state.name, this.props.list.id);
+        if (this.state.name) {
+            // Don't submit unless there is something for the name
+            this.props.editList(this.state.name, this.props.list.id);
+        }
     }
 
     render() {

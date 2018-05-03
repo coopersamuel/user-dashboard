@@ -32,8 +32,32 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
 
+        this.submitList = this.submitList.bind(this);
+        this.submitCard = this.submitCard.bind(this);
         this.addTrailingList = this.addTrailingList.bind(this);
         this.addTrailingCard = this.addTrailingCard.bind(this);
+    }
+
+    submitList(name, id, list) {
+        if (!list.name) {
+            this.addTrailingList();
+        } else {
+            document.getElementById(`input_${id}`).blur();
+        }
+        
+        this.props.editList(name, id);
+    }
+
+    submitCard(message, cardId, list) {
+        const card = _.find(list.cards, { 'id': cardId });
+
+        if (!card.message) {
+            this.addTrailingCard(list.id);
+        } else {
+            document.getElementById(`input_${cardId}`).blur();
+        }
+        
+        this.props.editCard(message, list.id, cardId);
     }
 
     async addTrailingList() {
@@ -45,7 +69,7 @@ class Board extends React.Component {
         const nextForm = document.getElementById(`input_${id}`);
         nextForm.focus();
 
-        this.props.addCard(null, id)
+        this.props.addCard(null, id); // Add an empty card to each list
     }
 
     async addTrailingCard(listId) {
@@ -73,27 +97,9 @@ class Board extends React.Component {
                                         <div key={`column_${index}`} className='col-3'>
                                             {_.map(getColumn(lists, index), (list) => {
                                                 return (
-                                                    <List key={list.id} list={list} 
-                                                        editList={(name, id) => {
-                                                            if (!list.name) {
-                                                                this.addTrailingList();
-                                                            } else {
-                                                                document.getElementById(`input_${id}`).blur();
-                                                            }
-                                                            
-                                                            this.props.editList(name, id);
-                                                        }} editCard={(message, cardId) => {
-                                                            const card = _.find(list.cards, { 'id': cardId });
-
-                                                            if (!card.message) {
-                                                                this.addTrailingCard(list.id);
-                                                            } else {
-                                                                document.getElementById(`input_${cardId}`).blur();
-                                                            }
-                                                            
-                                                            this.props.editCard(message, list.id, cardId);
-                                                        }}
-                                                    />
+                                                    <List   key={list.id} list={list} 
+                                                            editList={(name, id) => this.submitList(name, id, list)} 
+                                                            editCard={(message, id) => this.submitCard(message, id, list)} />
                                                 );
                                             })}
                                         </div>
