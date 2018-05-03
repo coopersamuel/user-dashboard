@@ -7,7 +7,7 @@ class Card extends React.Component {
         super(props);
 
         this.state = {
-            message: this.props.card ? this.props.card.message : ''
+            message: this.props.card.message ? this.props.card.message : ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -22,8 +22,7 @@ class Card extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        //this.props.editList(this.state.name, this.props.list.id);
-        console.log('new card');
+        this.props.editCard(this.state.message, this.props.card.id);
     }
 
     render() {
@@ -36,11 +35,12 @@ class Card extends React.Component {
                         <input  type="text" className="form-control card-message" 
                                 placeholder="Add a card" 
                                 onChange={this.handleChange}
-                                value={this.state.message} />
-                        <div className="input-group-append pt-1">
+                                value={this.state.message}
+                                id={`input_${card.id}`} />
+                        <div className="input-group-append pl-2 pt-1">
                             <span>
                                 <div className="btn btn-sm btn-light card-menu">
-                                    {card &&
+                                    {card.message &&
                                         <MdMoreHoriz className="mb-1" />
                                     ||
                                         <MdAdd className="mb-1" onClick={(event) => {

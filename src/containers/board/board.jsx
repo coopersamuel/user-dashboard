@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addList, editList } from '../../actions/actions';
+import { addList, editList, addCard, editCard } from '../../actions/actions';
 
 import List from '../../components/list/list';
 import { MdSentimentVerySatisfied } from 'react-icons/lib/md';
@@ -13,7 +13,7 @@ import index from '../../reducers';
 const getColumn = (collection, column) => {
     /*
     *   This function handles organizing the collection of lists that is stored in state into four separate arrays for display
-    *   This is necessary to display in a masonry-esque format
+    *   This is necessary utility function to display in a masonry-esque format
     */
 
     let subArray = [];
@@ -33,14 +33,27 @@ class Board extends React.Component {
         super(props);
 
         this.addTrailingList = this.addTrailingList.bind(this);
+        this.addTrailingCard = this.addTrailingCard.bind(this);
     }
 
     async addTrailingList() {
         // Add an empty list
-        await this.props.addList(null);
+        await this.props.addList(null); // Need to await the completion of this, otherwise you'll target the wrong list
         
         // Place the cursor in the new list
-        const id = _.findLast(this.props.lists).id;
+        const id = _.findLast(this.props.lists).id; // Grab the last list in the object
+        const nextForm = document.getElementById(`input_${id}`);
+        nextForm.focus();
+
+        this.props.addCard(null, id)
+    }
+
+    async addTrailingCard(listId) {
+        // Add an empty list
+        await this.props.addCard(null, listId); // Need to await the completion of this, otherwise you'll target the wrong card
+        
+        // Place the cursor in the new list
+        const id = _.findLast(this.props.lists[listId].cards).id; // Grab the last list in the object
         const nextForm = document.getElementById(`input_${id}`);
         nextForm.focus();
     }
@@ -60,15 +73,27 @@ class Board extends React.Component {
                                         <div className='col-3'>
                                             {_.map(getColumn(lists, index), (list) => {
                                                 return (
-                                                    <List list={list} editList={(name, id) => {
-                                                        if (!list.name) {
-                                                            this.addTrailingList();
-                                                        } else {
-                                                            document.getElementById(`input_${id}`).blur();
-                                                        }
-                                                        
-                                                        this.props.editList(name, id);
-                                                    }} />
+                                                    <List list={list} 
+                                                        editList={(name, id) => {
+                                                            if (!list.name) {
+                                                                this.addTrailingList();
+                                                            } else {
+                                                                document.getElementById(`input_${id}`).blur();
+                                                            }
+                                                            
+                                                            this.props.editList(name, id);
+                                                        }} editCard={(message, cardId) => {
+                                                            const card = _.find(list.cards, { 'id': cardId });
+
+                                                            if (!card.message) {
+                                                                this.addTrailingCard(list.id);
+                                                            } else {
+                                                                document.getElementById(`input_${cardId}`).blur();
+                                                            }
+                                                            
+                                                            this.props.editCard(message, list.id, cardId);
+                                                        }}
+                                                    />
                                                 );
                                             })}
                                         </div>
@@ -101,7 +126,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         addList,
-        editList
+        editList,
+        addCard,
+        editCard
     }, dispatch);
 }
 

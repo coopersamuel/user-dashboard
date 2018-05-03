@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../card/card';
-import { map } from 'lodash';
+import { map, isEmpty } from 'lodash';
 import { MdMoreHoriz, MdAdd } from 'react-icons/lib/md';
 import './list.scss';
 
@@ -59,10 +59,8 @@ class List extends React.Component {
                 {list.name && 
                     <div className='card-body'>
                         {map(list.cards, (card) => {
-                            return <Card card={card} />;
+                            return <Card card={card} editCard={this.props.editCard} />;
                         })}
-
-                        <Card card={null} />
                     </div>
                 }
             </div>

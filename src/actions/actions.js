@@ -21,8 +21,23 @@ export const editList = (name, listId) => {
     };
 }
 
-export const addCard = () => {
+export const addCard = (message, listId) => {
     return {
-        // stuff here 
+        type: ActionTypes.ADD_CARD,
+        payload: {
+            message,
+            listId
+        }
+    };
+}
+
+export const editCard = (message, listId, cardId) => {
+    return {
+        type: ActionTypes.EDIT_CARD,
+        payload: {
+            message,
+            listId,
+            cardId
+        }
     };
 }

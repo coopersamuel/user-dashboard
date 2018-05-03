@@ -1,8 +1,11 @@
 import * as ActionTypes from '../actions/actionTypes';
-import { cloneDeep, uniqueId } from 'lodash';
+import { cloneDeep, uniqueId, find } from 'lodash';
 
 export default (state = {}, action) => {
     const listId = uniqueId('list_');
+    const cardId = uniqueId('card_');
+
+    let newState = cloneDeep(state);
 
     switch(action.type) {
         case ActionTypes.ADD_LIST:
@@ -15,8 +18,17 @@ export default (state = {}, action) => {
                 }
             };
         case ActionTypes.EDIT_LIST:
-            let newState = cloneDeep(state);
             newState[action.payload.listId].name = action.payload.name;
+            return newState;
+        case ActionTypes.ADD_CARD:
+            newState[action.payload.listId].cards.push({
+                message: action.payload.message,
+                id: cardId, // Every card must have a unique ID
+            });
+            return newState;
+        case ActionTypes.EDIT_CARD:
+            const card = find(newState[action.payload.listId].cards, { 'id': action.payload.cardId });
+            card.message = action.payload.message;
             return newState;
         default:
             return state;
