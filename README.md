@@ -1,2 +1,2 @@
-# pseudo-trello
+# frello
 A Trello clone
