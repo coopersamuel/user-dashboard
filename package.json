@@ -19,9 +19,12 @@
   },
   "homepage": "https://github.com/coopersamuel/pseudo-trello#readme",
   "devDependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.46",
     "autoprefixer": "^8.3.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",

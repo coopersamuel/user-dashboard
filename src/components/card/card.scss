@@ -1,15 +1,12 @@
 .card {
-    &.list-card {
+    &.note-card {
         border-radius: 0;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
-
-        display: inline-block;
-        width: 100%;
+        border-bottom: none;
     }
 }
 
 .form-control {
-    &.list-name {
+    &.card-message {
         border: none;
         border-radius: 0;
         background-color: #f7f7f7;
@@ -17,7 +14,7 @@
 }
 
 .form-control:focus {
-    &.list-name {
+    &.card-message {
         box-shadow: none;
         border: 1px solid rgba(0, 0, 0, 0.125);
         outline: none;
@@ -25,7 +22,7 @@
 }
 
 .btn {
-    &.list-menu {
+    &.card-menu {
         opacity: .65;
     }
 }

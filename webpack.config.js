@@ -11,7 +11,7 @@ const paths = {
 
 module.exports = {
     mode: 'development',
-    entry: path.join(paths.SRC, "index.js"),
+    entry: ['babel-polyfill', path.join(paths.SRC, "index.js")],
     output : {
         path : paths.DIST,
         filename : '[name].bundle.js'
