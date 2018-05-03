@@ -59,7 +59,7 @@ class List extends React.Component {
                 {list.name && 
                     <div className='card-body'>
                         {map(list.cards, (card) => {
-                            return <Card card={card} editCard={this.props.editCard} />;
+                            return <Card key={card.id} card={card} editCard={this.props.editCard} />;
                         })}
                     </div>
                 }

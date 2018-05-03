@@ -70,10 +70,10 @@ class Board extends React.Component {
                                 {_.times(4, (index) => {
                                     /* Print out four of these */
                                     return (
-                                        <div className='col-3'>
+                                        <div key={`column_${index}`} className='col-3'>
                                             {_.map(getColumn(lists, index), (list) => {
                                                 return (
-                                                    <List list={list} 
+                                                    <List key={list.id} list={list} 
                                                         editList={(name, id) => {
                                                             if (!list.name) {
                                                                 this.addTrailingList();
