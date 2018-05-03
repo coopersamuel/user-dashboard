@@ -33,28 +33,28 @@ class List extends React.Component {
         return (
             <div className='card mb-4 list-card'>
                 <div className='card-header'>
-                    <div className="input-group">
-                        <form onSubmit={this.handleSubmit}>
-                            <label>
-                                <input  type="text" className="form-control list-name" 
-                                        placeholder="Create new list" 
-                                        value={this.state.name} 
-                                        onChange={this.handleChange}
-                                        id={`input_${list.id}`} />
-                            </label>
-                        </form>
+                    <form className="input-group" onSubmit={this.handleSubmit}>
+                        <input  type="text" className="form-control list-name" 
+                                placeholder="Create new list" 
+                                value={this.state.name} 
+                                onChange={this.handleChange}
+                                id={`input_${list.id}`} />
                         <div className="input-group-append pl-2 pt-1">
                             <span>
                                 <div className="btn btn-sm btn-light list-menu">
                                     {list.name &&
                                         <MdMoreHoriz className="mb-1" />
                                     ||
-                                        <MdAdd className="mb-1" onClick={this.handleSubmit} />
+                                        <MdAdd className="mb-1" onClick={(event) => {
+                                            if (this.state.name) {
+                                                this.handleSubmit(event);
+                                            }
+                                        }} />
                                     }
                                 </div>
                             </span>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 {list.name && 
                     <div className='card-body'>
