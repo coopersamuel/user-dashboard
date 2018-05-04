@@ -76,7 +76,7 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 [dragListId]: dragList,
-                [hoverListId]: hoverList
+                [hoverListId]: hoverList // In some cases hoverList will be the same list as dragList, but sometimes it won't
             };
         }
 
