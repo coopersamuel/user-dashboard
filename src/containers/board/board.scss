@@ -3,3 +3,10 @@
     letter-spacing: .15rem;
     opacity: .45;
 }
+
+.btn {
+    &.create-button {
+        letter-spacing: .15rem;
+        font-weight: 500;
+    }
+}

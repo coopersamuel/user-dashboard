@@ -41,3 +41,15 @@ export const editCard = (message, listId, cardId) => {
         }
     };
 }
+
+export const moveCard = (dragIndex, dragListId, hoverIndex, hoverListId) => {
+    return {
+        type: ActionTypes.MOVE_CARD,
+        payload: {
+            dragIndex,
+            dragListId,
+            hoverIndex,
+            hoverListId
+        }
+    };
+}

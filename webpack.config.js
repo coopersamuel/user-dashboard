@@ -11,6 +11,7 @@ const paths = {
 
 module.exports = {
     mode: 'development',
+    devtool: 'source-map',
     entry: ['babel-polyfill', path.join(paths.SRC, "index.js")],
     output : {
         path : paths.DIST,

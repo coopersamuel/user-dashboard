@@ -1,11 +1,10 @@
 import * as ActionTypes from '../actions/actionTypes';
 import { cloneDeep, uniqueId, find } from 'lodash';
+import { list } from 'postcss';
 
 export default (state = {}, action) => {
     const listId = uniqueId('list_');
     const cardId = uniqueId('card_');
-
-    let newState = cloneDeep(state);
 
     switch(action.type) {
         case ActionTypes.ADD_LIST:
@@ -17,19 +16,70 @@ export default (state = {}, action) => {
                     cards: []
                 }
             };
-        case ActionTypes.EDIT_LIST:
-            newState[action.payload.listId].name = action.payload.name;
-            return newState;
-        case ActionTypes.ADD_CARD:
-            newState[action.payload.listId].cards.push({
+
+        case ActionTypes.EDIT_LIST: {
+            const { listId, name } = action.payload;
+            const currentList = state[listId];
+
+            currentList.name = name;
+
+            return {
+                ...state,
+                [listId]: currentList,
+            };
+        }
+
+        case ActionTypes.ADD_CARD: {
+            const { message, listId } = action.payload;
+            const currentList = state[listId];
+
+            currentList.cards.push({
                 message: action.payload.message,
                 id: cardId, // Every card must have a unique ID
             });
-            return newState;
-        case ActionTypes.EDIT_CARD:
-            const card = find(newState[action.payload.listId].cards, { 'id': action.payload.cardId });
-            card.message = action.payload.message;
-            return newState;
+
+            return {
+                ...state,
+                [listId]: currentList,
+            };
+        }
+
+        case ActionTypes.EDIT_CARD: {
+            const { listId, cardId, message } = action.payload;
+            const currentList = state[listId];
+            
+            const card = find(currentList.cards, { 'id': cardId });
+            card.message = message;
+
+            return {
+                ...state,
+                [listId]: currentList,
+            };
+        }
+
+        case ActionTypes.MOVE_CARD: {
+            const { dragIndex, dragListId, hoverIndex, hoverListId } = action.payload;
+            const dragList = state[dragListId];
+            const hoverList = state[hoverListId];
+
+            const dragCard = dragList.cards[dragIndex]; // Get the dragged card
+            dragList.cards.splice(dragIndex, 1); // First remove the dragged card from the array
+
+            if (dragListId === hoverListId) {
+                // This drag is occuring within the same list
+                dragList.cards.splice(hoverIndex, 0, dragCard) // Next, add the dragged card back into the array in the correct spot
+            } else {
+                // This is a drag to a separate list
+                hoverList.cards.splice(hoverIndex, 0, dragCard) // Or, add the dragged card into the new list
+            }
+            
+            return {
+                ...state,
+                [dragListId]: dragList,
+                [hoverListId]: hoverList
+            };
+        }
+
         default:
             return state;
     }
