@@ -3,6 +3,10 @@
         border-radius: 0;
         border-bottom: none;
     }
+
+    &.dragging {
+        opacity: .2;
+    }
 }
 
 .form-control {

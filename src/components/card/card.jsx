@@ -13,6 +13,12 @@ const cardSource = {
             listId: props.listId
         }
     },
+    canDrag: function(props, monitor) {
+        return !!props.card.message;
+    },
+    isDragging(props, monitor) {
+        return props.card.id === monitor.getItem().id;
+    },
 }
 
 const cardTarget = {
@@ -25,7 +31,12 @@ const cardTarget = {
 		// Don't replace items with themselves
 		if (dragIndex === hoverIndex && dragList === hoverList) {
 			return
-		}
+        }
+        
+        // Don't replace an "Add a card" trailing card
+        if (!props.card.message) {
+			return
+        }
 
 		// Determine rectangle on screen
 		const hoverBoundingRect = findDOMNode(component).getBoundingClientRect()
@@ -52,7 +63,7 @@ const cardTarget = {
 		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
 			return
         }
-        
+
 		// Time to actually perform the action
 		props.moveCard(dragIndex, dragList, hoverIndex, hoverList)
 
@@ -62,7 +73,7 @@ const cardTarget = {
         // to avoid expensive index searches.
         monitor.getItem().listId = hoverList
         monitor.getItem().index = hoverIndex
-	},
+    },
 }
 
 @DropTarget(ItemTypes.CARD, cardTarget, connect => ({
@@ -70,7 +81,7 @@ const cardTarget = {
 }))
 @DragSource(ItemTypes.CARD, cardSource, (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
-	isDragging: monitor.isDragging(),
+    isDragging: monitor.isDragging(),
 }))
 class Card extends React.Component {
     constructor(props) {
@@ -101,7 +112,7 @@ class Card extends React.Component {
         let { card, isDragging, connectDragSource, connectDropTarget } = this.props;
 
         return connectDragSource(connectDropTarget(
-            <div className='card note-card mb-3'>
+            <div className={`card note-card mb-3 ${isDragging ? 'dragging' : ''}`}>
                 <div className='card-header'>
                     <form className="input-group" onSubmit={this.handleSubmit}>
                         <input  type="text" className="form-control card-message" 
