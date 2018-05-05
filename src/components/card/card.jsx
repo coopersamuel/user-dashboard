@@ -117,8 +117,8 @@ class Card extends React.Component {
     }
 
     render() {
-        let { card, listId, menuCard, isDragging, connectDragSource, connectDropTarget } = this.props;
-        const isMenuCard = menuCard === card.id;
+        let { card, listId, menuCard, index, isDragging, connectDragSource, connectDropTarget } = this.props;
+        const isMenuCard = menuCard === card.id; // Is this card the current menu card
 
         return connectDragSource(connectDropTarget(
             <div className={`card note-card mb-3 ${isDragging ? 'dragging' : ''} ${isMenuCard ? 'card-menu' : ''}`}>
@@ -191,16 +191,18 @@ class Card extends React.Component {
                     </form>
                     <div className={isMenuCard ? `show-menu container` : 'collapse-menu'}>
                         <div className={isMenuCard ? `` : 'd-none'}>
-                            <div className="row mt-2">
+                            <div className="row justify-content-center mt-1">
                                 <div className="col-5">
                                     <span className="btn btn-sm btn-light menu-button" onClick={() => {
                                         this.setState({ submitted: false }, () => document.getElementById(`input_${card.id}`).focus());
                                     }}>
-                                        Edit Card
+                                        Edit
                                     </span>
                                 </div>
                                 <div className="col-5">
-                                    <span className="btn btn-sm btn-light menu-button" onClick={() => console.log('delete this card')}>Delete Card</span>
+                                    <span className="btn btn-sm btn-light menu-button" onClick={() => {
+                                        this.props.deleteCard(listId, index);
+                                    }}>Delete</span>
                                 </div>
                             </div>
                         </div>

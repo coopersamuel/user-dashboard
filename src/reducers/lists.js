@@ -85,6 +85,18 @@ export default (state = {}, action) => {
             };
         }
 
+        case ActionTypes.DELETE_CARD: {
+            const { listId, cardIndex } = action.payload;
+            const currentList = state[listId];
+
+            currentList.cards.splice(cardIndex, 1); // Simply remove the card from the array
+
+            return {
+                ...state,
+                [listId]: currentList,
+            };
+        }
+
         case ActionTypes.TOGGLE_LABEL: {
             const { listId, cardId, label } = action.payload;
             const currentList = state[listId];

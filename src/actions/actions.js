@@ -54,6 +54,16 @@ export const moveCard = (dragIndex, dragListId, hoverIndex, hoverListId) => {
     };
 }
 
+export const deleteCard = (listId, cardIndex) => {
+    return {
+        type: ActionTypes.DELETE_CARD,
+        payload: {
+            listId,
+            cardIndex
+        }
+    };
+}
+
 export const toggleLabel = (listId, cardId, label) => {
     return {
         type: ActionTypes.TOGGLE_LABEL,

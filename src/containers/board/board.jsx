@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addList, editList, addCard, editCard, moveCard, toggleLabel } from '../../actions/actions';
+import { addList, editList, addCard, editCard, moveCard, deleteCard, toggleLabel } from '../../actions/actions';
 
 import List from '../../components/list/list';
 import { MdSentimentVerySatisfied } from 'react-icons/lib/md';
@@ -43,6 +43,7 @@ class Board extends React.Component {
         this.addTrailingList = this.addTrailingList.bind(this);
         this.addTrailingCard = this.addTrailingCard.bind(this);
         this.onMenuClick = this.onMenuClick.bind(this);
+        this.deleteCard = this.deleteCard.bind(this);
     }
 
     submitList(name, id, list) {
@@ -95,7 +96,17 @@ class Board extends React.Component {
             menuList: listId,   // Pass these to the lists and cards
             menuCard: cardId    // so that they will know if they're the menu list/card
         });
-        
+    }
+
+    deleteCard(listId, cardIndex) {
+        // First reset the overlay to default
+        this.setState({ 
+            overlay: false,
+            menuList: null,   
+            menuCard: null    
+        });
+
+        this.props.deleteCard(listId, cardIndex);
     }
 
     render() {
@@ -117,6 +128,7 @@ class Board extends React.Component {
                                                             editList={(name, id) => this.submitList(name, id, list)} 
                                                             editCard={(message, id) => this.submitCard(message, id, list)}
                                                             moveCard={this.props.moveCard}
+                                                            deleteCard={(listId, cardIndex) => this.deleteCard(listId, cardIndex)}
                                                             onMenuClick={this.onMenuClick}
                                                             menuList={this.state.menuList}
                                                             menuCard={this.state.menuCard}
@@ -162,6 +174,7 @@ function mapDispatchToProps(dispatch) {
         addCard,
         editCard,
         moveCard,
+        deleteCard,
         toggleLabel
     }, dispatch);
 }
