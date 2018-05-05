@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --open",
-    "build": "webpack"
+    "build": "webpack",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/coopersamuel/pseudo-trello/issues"
   },
-  "homepage": "https://github.com/coopersamuel/pseudo-trello#readme",
+  "homepage": "https://coopersamuel.github.io/frello/",
   "devDependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.46",
     "autoprefixer": "^8.3.0",
@@ -47,6 +49,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.1.0",
+    "gh-pages": "^1.1.0",
     "jquery": "^3.3.1",
     "lodash": "^4.17.10",
     "popper.js": "^1.14.3",
