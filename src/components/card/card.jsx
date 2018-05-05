@@ -14,7 +14,7 @@ const cardSource = {
             listLength: props.listLength
         }
     },
-    canDrag: function(props, monitor) {
+    canDrag(props, monitor) {
         return !!props.card.message;
     },
     isDragging(props, monitor) {
@@ -83,7 +83,7 @@ const cardTarget = {
 }))
 @DragSource(ItemTypes.CARD, cardSource, (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
+    isDragging: monitor.isDragging()
 }))
 class Card extends React.Component {
     constructor(props) {
@@ -117,10 +117,10 @@ class Card extends React.Component {
     }
 
     render() {
-        let { card, isDragging, connectDragSource, connectDropTarget } = this.props;
+        let { card, listId, menuCard, isDragging, connectDragSource, connectDropTarget } = this.props;
 
         return connectDragSource(connectDropTarget(
-            <div className={`card note-card mb-3 ${isDragging ? 'dragging' : ''}`}>
+            <div className={`card note-card mb-3 ${isDragging ? 'dragging' : ''} ${menuCard === card.id ? 'card-menu' : ''}`}>
                 <div className='card-header'>
                     <form className="input-group" onSubmit={this.handleSubmit}>
                         <input  type="text" className="form-control card-message" 
@@ -136,17 +136,21 @@ class Card extends React.Component {
                                 }} />
                         <div className="input-group-append pl-2 pt-1">
                             <span>
-                                <div className="btn btn-sm btn-light card-menu">
+                                <div className="btn btn-sm btn-light card-menu" onClick={(event) => {
+                                    if (card.message) {
+                                        this.props.onMenuClick(listId, card.id);
+                                    } else {
+                                        if (this.state.message) {
+                                            this.handleSubmit(event);
+                                        } else {
+                                            document.getElementById(`input_${card.id}`).focus();
+                                        }
+                                    }
+                                }}>
                                     {card.message &&
                                         <MdMoreHoriz className="mb-1" />
                                     ||
-                                        <MdAdd className="mb-1" onClick={(event) => {
-                                            if (this.state.message) {
-                                                this.handleSubmit(event);
-                                            } else {
-                                                document.getElementById(`input_${card.id}`).focus();
-                                            }
-                                        }} />
+                                        <MdAdd className="mb-1" />
                                     }
                                 </div>
                             </span>

@@ -7,6 +7,12 @@
     &.dragging {
         opacity: .2;
     }
+
+    &.card-menu {
+        z-index: 2000;
+        color: #afafaf;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+    }
 }
 
 .form-control {

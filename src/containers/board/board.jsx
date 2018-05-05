@@ -32,10 +32,17 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            overlay: false,
+            menuList: null,
+            menuCard: null
+        }
+
         this.submitList = this.submitList.bind(this);
         this.submitCard = this.submitCard.bind(this);
         this.addTrailingList = this.addTrailingList.bind(this);
         this.addTrailingCard = this.addTrailingCard.bind(this);
+        this.onMenuClick = this.onMenuClick.bind(this);
     }
 
     submitList(name, id, list) {
@@ -82,6 +89,15 @@ class Board extends React.Component {
         nextForm.focus();
     }
 
+    onMenuClick(listId = null, cardId = null) {
+        this.setState({ 
+            overlay: true,
+            menuList: listId,   // Pass these to the lists and cards
+            menuCard: cardId    // so that they will know if they're the menu list/card
+        });
+        
+    }
+
     render() {
         const { lists } = this.props;
 
@@ -100,7 +116,10 @@ class Board extends React.Component {
                                                     <List   key={list.id} list={list} 
                                                             editList={(name, id) => this.submitList(name, id, list)} 
                                                             editCard={(message, id) => this.submitCard(message, id, list)}
-                                                            moveCard={this.props.moveCard} />
+                                                            moveCard={this.props.moveCard}
+                                                            onMenuClick={this.onMenuClick}
+                                                            menuList={this.state.menuList}
+                                                            menuCard={this.state.menuCard} />
                                                 );
                                             })}
                                         </div>
@@ -119,6 +138,11 @@ class Board extends React.Component {
                         </div>
                     }
                 </div>
+                <div className={`${this.state.overlay ? 'overlay' : ''}`} onClick={() => this.setState({ 
+                    overlay: false,
+                    menuList: null,
+                    menuCard: null
+                })}></div>
             </div>
         );
     }
