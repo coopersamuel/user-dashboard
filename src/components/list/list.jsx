@@ -54,6 +54,8 @@ class List extends React.Component {
                                         <MdAdd className="mb-1" onClick={(event) => {
                                             if (this.state.name) {
                                                 this.handleSubmit(event);
+                                            } else {
+                                                document.getElementById(`input_${list.id}`).focus();
                                             }
                                         }} />
                                     }

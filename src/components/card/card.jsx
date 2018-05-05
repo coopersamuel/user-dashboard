@@ -10,7 +10,8 @@ const cardSource = {
         return {
             id: props.card.id,
             index: props.index,
-            listId: props.listId
+            listId: props.listId,
+            listLength: props.listLength
         }
     },
     canDrag: function(props, monitor) {
@@ -34,7 +35,8 @@ const cardTarget = {
         }
         
         // Don't replace an "Add a card" trailing card
-        if (!props.card.message) {
+        // unless it's the only card in the list
+        if (!props.card.message && hoverIndex !== 0) {
 			return
         }
 
@@ -88,7 +90,8 @@ class Card extends React.Component {
         super(props);
 
         this.state = {
-            message: this.props.card.message ? this.props.card.message : ''
+            message: this.props.card.message ? this.props.card.message : '',
+            submitted: this.props.card.message ? true : false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -103,6 +106,11 @@ class Card extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+
+        this.setState({
+            submitted: true
+        });
+
         if (this.state.message) {
             this.props.editCard(this.state.message, this.props.card.id);
         }
@@ -119,7 +127,13 @@ class Card extends React.Component {
                                 placeholder="Add a card" 
                                 onChange={this.handleChange}
                                 value={this.state.message}
-                                id={`input_${card.id}`} />
+                                id={`input_${card.id}`}
+                                disabled={this.state.submitted}
+                                onBlur={(event) => {
+                                    if (this.state.message) {
+                                        this.handleSubmit(event);
+                                    }
+                                }} />
                         <div className="input-group-append pl-2 pt-1">
                             <span>
                                 <div className="btn btn-sm btn-light card-menu">
@@ -129,6 +143,8 @@ class Card extends React.Component {
                                         <MdAdd className="mb-1" onClick={(event) => {
                                             if (this.state.message) {
                                                 this.handleSubmit(event);
+                                            } else {
+                                                document.getElementById(`input_${card.id}`).focus();
                                             }
                                         }} />
                                     }

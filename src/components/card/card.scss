@@ -17,6 +17,14 @@
     }
 }
 
+.form-control:disabled {
+    &.card-message {
+        border: none;
+        border-radius: 0;
+        background-color: #f7f7f7;
+    }
+}
+
 .form-control:focus {
     &.card-message {
         box-shadow: none;
