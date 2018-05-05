@@ -122,40 +122,62 @@ class Card extends React.Component {
         return connectDragSource(connectDropTarget(
             <div className={`card note-card mb-3 ${isDragging ? 'dragging' : ''} ${menuCard === card.id ? 'card-menu' : ''}`}>
                 <div className='card-header'>
-                    <form className="input-group" onSubmit={this.handleSubmit}>
-                        <input  type="text" className="form-control card-message" 
-                                placeholder="Add a card" 
-                                onChange={this.handleChange}
-                                value={this.state.message}
-                                id={`input_${card.id}`}
-                                disabled={this.state.submitted}
-                                onBlur={(event) => {
-                                    if (this.state.message) {
-                                        this.handleSubmit(event);
-                                    }
-                                }} />
-                        <div className="input-group-append pl-2 pt-1">
-                            <span>
-                                <div className="btn btn-sm btn-light card-menu" onClick={(event) => {
-                                    if (card.message) {
-                                        this.props.onMenuClick(listId, card.id);
-                                    } else {
+                    <div id={`draggable_${card.id}`}>
+                        <form className="input-group" onSubmit={this.handleSubmit}>
+                            <input  type="text" className="form-control card-message" 
+                                    placeholder="Add a card" 
+                                    onChange={this.handleChange}
+                                    value={this.state.message}
+                                    id={`input_${card.id}`}
+                                    disabled={this.state.submitted}
+                                    onBlur={(event) => {
                                         if (this.state.message) {
                                             this.handleSubmit(event);
-                                        } else {
-                                            document.getElementById(`input_${card.id}`).focus();
                                         }
-                                    }
-                                }}>
-                                    {card.message &&
-                                        <MdMoreHoriz className="mb-1" />
-                                    ||
-                                        <MdAdd className="mb-1" />
-                                    }
-                                </div>
-                            </span>
+                                    }} />
+                            <div className="input-group-append pl-2 pt-1">
+                                <span>
+                                    <div className={`btn btn-sm btn-light card-menu ${menuCard === card.id ? 'disabled' : ''}`} onClick={(event) => {
+                                        if (card.message) {
+                                            this.props.onMenuClick(listId, card.id);
+                                            this.setState({ menu: true });
+                                        } else {
+                                            if (this.state.message) {
+                                                this.handleSubmit(event);
+                                            } else {
+                                                document.getElementById(`input_${card.id}`).focus();
+                                            }
+                                        }
+                                    }}>
+                                        {card.message &&
+                                            <MdMoreHoriz className="mb-1" />
+                                        ||
+                                            <MdAdd className="mb-1" />
+                                        }
+                                    </div>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div className={menuCard === card.id ? `show-menu container` : 'collapse-menu'}>
+                        <div className="row justify-content-center">
+                            <div className="col-4"><span class="badge badge-pill label one"> </span></div>
+                            <div className="col-4"><span class="badge badge-pill label two"> </span></div>
+                            <div className="col-4"><span class="badge badge-pill label three"> </span></div>
                         </div>
-                    </form>
+                        <div className="row mt-2">
+                            <div className="col-5">
+                                <span className="btn btn-sm btn-light menu-button" onClick={() => {
+                                    this.setState({ submitted: false }, () => document.getElementById(`input_${card.id}`).focus());
+                                }}>
+                                    Edit Card
+                                </span>
+                            </div>
+                            <div className="col-5">
+                                <span className="btn btn-sm btn-light menu-button" onClick={() => console.log('delete this card')}>Delete Card</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         ));

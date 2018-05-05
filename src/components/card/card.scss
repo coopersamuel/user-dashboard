@@ -43,4 +43,42 @@
     &.card-menu {
         opacity: .65;
     }
+
+    &.menu-button {
+        color: #afafaf;
+    }
+}
+
+.show-menu {
+    overflow: hidden;
+    max-height: 500px;
+    transition: max-height 0.35s ease-in;
+
+    color: #afafaf;
+}
+
+.collapse-menu {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.15s ease-out;
+}
+
+.badge {
+    &.label {
+        font-size: .4rem;
+        padding-left: 2.65rem;
+        padding-top: .25rem;
+
+        &.one {
+            background-color: #3F88C5;
+        }
+
+        &.two {
+            background-color: #C3D898;
+        }
+
+        &.three {
+            background-color: rgb(79, 182, 125);
+        }
+    }
 }
