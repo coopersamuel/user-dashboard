@@ -158,21 +158,23 @@ class Card extends React.Component {
                         </div>
                     </form>
                     <div className={menuCard === card.id ? `show-menu container` : 'collapse-menu'}>
-                        <div className="row justify-content-center">
-                            <div className="col-4"><span class="badge badge-pill label one"> </span></div>
-                            <div className="col-4"><span class="badge badge-pill label two"> </span></div>
-                            <div className="col-4"><span class="badge badge-pill label three"> </span></div>
-                        </div>
-                        <div className="row mt-2">
-                            <div className="col-5">
-                                <span className="btn btn-sm btn-light menu-button" onClick={() => {
-                                    this.setState({ submitted: false }, () => document.getElementById(`input_${card.id}`).focus());
-                                }}>
-                                    Edit Card
-                                </span>
+                        <div className={menuCard === card.id ? `` : 'd-none'}>
+                            <div className="row justify-content-center">
+                                <div className="col-4"><span className="badge badge-pill label one"> </span></div>
+                                <div className="col-4"><span className="badge badge-pill label two"> </span></div>
+                                <div className="col-4"><span className="badge badge-pill label three"> </span></div>
                             </div>
-                            <div className="col-5">
-                                <span className="btn btn-sm btn-light menu-button" onClick={() => console.log('delete this card')}>Delete Card</span>
+                            <div className="row mt-2">
+                                <div className="col-5">
+                                    <span className="btn btn-sm btn-light menu-button" onClick={() => {
+                                        this.setState({ submitted: false }, () => document.getElementById(`input_${card.id}`).focus());
+                                    }}>
+                                        Edit Card
+                                    </span>
+                                </div>
+                                <div className="col-5">
+                                    <span className="btn btn-sm btn-light menu-button" onClick={() => console.log('delete this card')}>Delete Card</span>
+                                </div>
                             </div>
                         </div>
                     </div>
