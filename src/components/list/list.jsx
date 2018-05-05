@@ -74,7 +74,8 @@ class List extends React.Component {
                                         editCard={this.props.editCard} 
                                         moveCard={this.props.moveCard}
                                         onMenuClick={this.props.onMenuClick}
-                                        menuCard={this.props.menuCard} />;
+                                        menuCard={this.props.menuCard}
+                                        toggleLabel={this.props.toggleLabel} />;
                         })}
                     </div>
                 }

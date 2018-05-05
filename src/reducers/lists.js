@@ -35,7 +35,12 @@ export default (state = {}, action) => {
 
             currentList.cards.push({
                 message: action.payload.message,
-                id: cardId, // Every card must have a unique ID
+                id: cardId, // Every card must have a unique ID,
+                labels: {
+                    one: false,
+                    two: false,
+                    three: false
+                }
             });
 
             return {
@@ -77,6 +82,19 @@ export default (state = {}, action) => {
                 ...state,
                 [dragListId]: dragList,
                 [hoverListId]: hoverList // In some cases hoverList will be the same list as dragList, but sometimes it won't
+            };
+        }
+
+        case ActionTypes.TOGGLE_LABEL: {
+            const { listId, cardId, label } = action.payload;
+            const currentList = state[listId];
+            
+            const card = find(currentList.cards, { 'id': cardId });
+            card.labels[label] = !card.labels[label];   // Toggle the label
+
+            return {
+                ...state,
+                [listId]: currentList,
             };
         }
 

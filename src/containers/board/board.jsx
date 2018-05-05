@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addList, editList, addCard, editCard, moveCard } from '../../actions/actions';
+import { addList, editList, addCard, editCard, moveCard, toggleLabel } from '../../actions/actions';
 
 import List from '../../components/list/list';
 import { MdSentimentVerySatisfied } from 'react-icons/lib/md';
@@ -119,7 +119,8 @@ class Board extends React.Component {
                                                             moveCard={this.props.moveCard}
                                                             onMenuClick={this.onMenuClick}
                                                             menuList={this.state.menuList}
-                                                            menuCard={this.state.menuCard} />
+                                                            menuCard={this.state.menuCard}
+                                                            toggleLabel={(listId, cardId, label) => this.props.toggleLabel(listId, cardId, label)} />
                                                 );
                                             })}
                                         </div>
@@ -160,7 +161,8 @@ function mapDispatchToProps(dispatch) {
         editList,
         addCard,
         editCard,
-        moveCard
+        moveCard,
+        toggleLabel
     }, dispatch);
 }
 

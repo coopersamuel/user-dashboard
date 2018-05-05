@@ -68,6 +68,7 @@
         font-size: .4rem;
         padding-left: 2.65rem;
         padding-top: .25rem;
+        opacity: .5;
 
         &.one {
             background-color: #3F88C5;
@@ -80,5 +81,15 @@
         &.three {
             background-color: rgb(79, 182, 125);
         }
+    }
+
+    &.active {
+        opacity: 1;
+    }
+}
+
+.menu-active {
+    .badge:hover {
+        cursor: pointer;
     }
 }
