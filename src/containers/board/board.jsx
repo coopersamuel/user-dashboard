@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addList, editList, addCard, editCard } from '../../actions/actions';
+import { addList, editList, addCard, editCard, moveCard } from '../../actions/actions';
 
 import List from '../../components/list/list';
 import { MdSentimentVerySatisfied } from 'react-icons/lib/md';
@@ -99,7 +99,8 @@ class Board extends React.Component {
                                                 return (
                                                     <List   key={list.id} list={list} 
                                                             editList={(name, id) => this.submitList(name, id, list)} 
-                                                            editCard={(message, id) => this.submitCard(message, id, list)} />
+                                                            editCard={(message, id) => this.submitCard(message, id, list)}
+                                                            moveCard={this.props.moveCard} />
                                                 );
                                             })}
                                         </div>
@@ -113,7 +114,7 @@ class Board extends React.Component {
                             <div className='text-center py-4'><MdSentimentVerySatisfied size={60} /></div>
                             <div>Welcome to frello! Let's start with your first list</div>
                             <div className='text-center pt-4'>
-                                <button className='btn btn-light' onClick={() => this.addTrailingList()}>Create list</button>
+                                <button className='btn btn-light create-button' onClick={() => this.addTrailingList()}>CREATE LIST</button>
                             </div>
                         </div>
                     }
@@ -134,7 +135,8 @@ function mapDispatchToProps(dispatch) {
         addList,
         editList,
         addCard,
-        editCard
+        editCard,
+        moveCard
     }, dispatch);
 }
 

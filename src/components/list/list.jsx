@@ -1,9 +1,12 @@
 import React from 'react';
 import Card from '../card/card';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import { map, isEmpty } from 'lodash';
 import { MdMoreHoriz, MdAdd } from 'react-icons/lib/md';
 import './list.scss';
 
+@DragDropContext(HTML5Backend)
 class List extends React.Component {
     constructor(props) {
         super(props);
@@ -51,6 +54,8 @@ class List extends React.Component {
                                         <MdAdd className="mb-1" onClick={(event) => {
                                             if (this.state.name) {
                                                 this.handleSubmit(event);
+                                            } else {
+                                                document.getElementById(`input_${list.id}`).focus();
                                             }
                                         }} />
                                     }
@@ -61,8 +66,8 @@ class List extends React.Component {
                 </div>
                 {list.name && 
                     <div className='card-body'>
-                        {map(list.cards, (card) => {
-                            return <Card key={card.id} card={card} editCard={this.props.editCard} />;
+                        {map(list.cards, (card, index) => {
+                            return <Card key={card.id} listId={list.id} card={card} index={index} editCard={this.props.editCard} moveCard={this.props.moveCard} />;
                         })}
                     </div>
                 }

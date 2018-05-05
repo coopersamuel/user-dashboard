@@ -3,9 +3,21 @@
         border-radius: 0;
         border-bottom: none;
     }
+
+    &.dragging {
+        opacity: .2;
+    }
 }
 
 .form-control {
+    &.card-message {
+        border: none;
+        border-radius: 0;
+        background-color: #f7f7f7;
+    }
+}
+
+.form-control:disabled {
     &.card-message {
         border: none;
         border-radius: 0;
