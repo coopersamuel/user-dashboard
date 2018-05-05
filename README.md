@@ -1,5 +1,5 @@
 # frello
-A Trello clone, just for fun
+As the repo name suggests, this is a fake version of trello - a trello clone, just for fun
 
 #### [Demo link](https://coopersamuel.github.io/frello/)
 
