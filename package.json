@@ -1,5 +1,5 @@
 {
-  "name": "pseudo-trello",
+  "name": "Frello",
   "version": "1.0.0",
   "description": "trello clone",
   "main": "index.js",
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/coopersamuel/pseudo-trello.git"
+    "url": "git+https://github.com/coopersamuel/frello.git"
   },
   "author": "Samuel Cooper",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/coopersamuel/pseudo-trello/issues"
+    "url": "https://github.com/coopersamuel/frello/issues"
   },
   "homepage": "https://coopersamuel.github.io/frello/",
   "devDependencies": {
