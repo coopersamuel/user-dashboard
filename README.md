@@ -1,5 +1,5 @@
 # frello
-A Trello clone
+A Trello clone, just for fun
 
 #### [Demo link](https://coopersamuel.github.io/frello/)
 
