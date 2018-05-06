@@ -7,6 +7,12 @@
     &.dragging {
         opacity: .2;
     }
+
+    &.card-menu {
+        z-index: 2000;
+        color: #afafaf;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+    }
 }
 
 .form-control {
@@ -36,5 +42,58 @@
 .btn {
     &.card-menu {
         opacity: .65;
+    }
+
+    &.menu-button {
+        color: #afafaf;
+    }
+}
+
+.show-menu {
+    overflow: hidden;
+    max-height: 500px;
+    transition: max-height 0.45s ease-in;
+
+    color: #afafaf;
+}
+
+.collapse-menu {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.15s ease-out;
+}
+
+.badge {
+    &.label {
+        font-size: .4rem;
+        padding-left: 2.65rem;
+        padding-top: .25rem;
+        opacity: .35;
+
+        &.one {
+            background-color: #3F88C5;
+        }
+
+        &.two {
+            background-color: #C3D898;
+        }
+
+        &.three {
+            background-color: rgb(79, 182, 125);
+        }
+    }
+
+    &.active {
+        opacity: 1;
+    }
+}
+
+.hide-overflow {
+    overflow: hidden;
+}
+
+.menu-active {
+    .badge:hover {
+        cursor: pointer;
     }
 }

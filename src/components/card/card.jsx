@@ -14,7 +14,7 @@ const cardSource = {
             listLength: props.listLength
         }
     },
-    canDrag: function(props, monitor) {
+    canDrag(props, monitor) {
         return !!props.card.message;
     },
     isDragging(props, monitor) {
@@ -83,7 +83,7 @@ const cardTarget = {
 }))
 @DragSource(ItemTypes.CARD, cardSource, (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
+    isDragging: monitor.isDragging()
 }))
 class Card extends React.Component {
     constructor(props) {
@@ -117,13 +117,45 @@ class Card extends React.Component {
     }
 
     render() {
-        let { card, isDragging, connectDragSource, connectDropTarget } = this.props;
+        let { card, listId, menuCard, index, isDragging, connectDragSource, connectDropTarget } = this.props;
+        const isMenuCard = menuCard === card.id; // Is this card the current menu card
 
         return connectDragSource(connectDropTarget(
-            <div className={`card note-card mb-3 ${isDragging ? 'dragging' : ''}`}>
+            <div className={`card note-card mb-3 ${isDragging ? 'dragging' : ''} ${isMenuCard ? 'card-menu' : ''}`}>
                 <div className='card-header'>
+                    <div className="container">
+                        <div className={`row justify-content-left pt-0 ${isMenuCard ? 'menu-active' : ''}`}>
+                            {(card.labels.one || isMenuCard) &&
+                                <div className="col-4 hide-overflow text-center">
+                                    <span className={`badge align-middle badge-pill label ${card.labels.one ? `active` : ''} one`} onClick={() => {
+                                        if (isMenuCard) {
+                                            this.props.toggleLabel(listId, card.id, 'one')
+                                        }
+                                    }}> </span>
+                                </div>
+                            }
+                            {(card.labels.two || isMenuCard) && 
+                                <div className="col-4 hide-overflow text-center">
+                                    <span className={`badge align-middle badge-pill label ${card.labels.two ? `active` : ''} two`} onClick={() => {
+                                        if (isMenuCard) {
+                                            this.props.toggleLabel(listId, card.id, 'two')
+                                        }
+                                    }}> </span>
+                                </div>
+                            }
+                            {(card.labels.three || isMenuCard) &&
+                                <div className="col-4 hide-overflow text-center">
+                                    <span className={`badge align-middle badge-pill label ${card.labels.three ? `active` : ''} three`} onClick={() => {
+                                        if (isMenuCard) {
+                                            this.props.toggleLabel(listId, card.id, 'three')
+                                        }
+                                    }}> </span>
+                                </div>
+                            }
+                        </div>
+                    </div>
                     <form className="input-group" onSubmit={this.handleSubmit}>
-                        <input  type="text" className="form-control card-message" 
+                        <input  type="text" className="form-control pl-3 card-message" 
                                 placeholder="Add a card" 
                                 onChange={this.handleChange}
                                 value={this.state.message}
@@ -134,24 +166,47 @@ class Card extends React.Component {
                                         this.handleSubmit(event);
                                     }
                                 }} />
-                        <div className="input-group-append pl-2 pt-1">
+                        <div className="input-group-append pl-2 pr-1 pt-1">
                             <span>
-                                <div className="btn btn-sm btn-light card-menu">
+                                <div className={`btn btn-sm btn-light card-menu ${isMenuCard ? 'disabled' : ''}`} onClick={(event) => {
+                                    if (card.message) {
+                                        this.props.onMenuClick(listId, card.id);
+                                        this.setState({ menu: true });
+                                    } else {
+                                        if (this.state.message) {
+                                            this.handleSubmit(event);
+                                        } else {
+                                            document.getElementById(`input_${card.id}`).focus();
+                                        }
+                                    }
+                                }}>
                                     {card.message &&
                                         <MdMoreHoriz className="mb-1" />
                                     ||
-                                        <MdAdd className="mb-1" onClick={(event) => {
-                                            if (this.state.message) {
-                                                this.handleSubmit(event);
-                                            } else {
-                                                document.getElementById(`input_${card.id}`).focus();
-                                            }
-                                        }} />
+                                        <MdAdd className="mb-1" />
                                     }
                                 </div>
                             </span>
                         </div>
                     </form>
+                    <div className={isMenuCard ? `show-menu container` : 'collapse-menu'}>
+                        <div className={isMenuCard ? `` : 'd-none'}>
+                            <div className="row justify-content-center mt-1">
+                                <div className="col-5">
+                                    <span className="btn btn-sm btn-light menu-button" onClick={() => {
+                                        this.setState({ submitted: false }, () => document.getElementById(`input_${card.id}`).focus());
+                                    }}>
+                                        Edit
+                                    </span>
+                                </div>
+                                <div className="col-5">
+                                    <span className="btn btn-sm btn-light menu-button" onClick={() => {
+                                        this.props.deleteCard(listId, index);
+                                    }}>Delete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         ));
