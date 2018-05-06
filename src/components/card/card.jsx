@@ -126,7 +126,7 @@ class Card extends React.Component {
                     <div className="container">
                         <div className={`row justify-content-left pt-0 ${isMenuCard ? 'menu-active' : ''}`}>
                             {(card.labels.one || isMenuCard) &&
-                                <div className="col-4 text-center">
+                                <div className="col-4 hide-overflow text-center">
                                     <span className={`badge align-middle badge-pill label ${card.labels.one ? `active` : ''} one`} onClick={() => {
                                         if (isMenuCard) {
                                             this.props.toggleLabel(listId, card.id, 'one')
@@ -135,7 +135,7 @@ class Card extends React.Component {
                                 </div>
                             }
                             {(card.labels.two || isMenuCard) && 
-                                <div className="col-4 text-center">
+                                <div className="col-4 hide-overflow text-center">
                                     <span className={`badge align-middle badge-pill label ${card.labels.two ? `active` : ''} two`} onClick={() => {
                                         if (isMenuCard) {
                                             this.props.toggleLabel(listId, card.id, 'two')
@@ -144,7 +144,7 @@ class Card extends React.Component {
                                 </div>
                             }
                             {(card.labels.three || isMenuCard) &&
-                                <div className="col-4 text-center">
+                                <div className="col-4 hide-overflow text-center">
                                     <span className={`badge align-middle badge-pill label ${card.labels.three ? `active` : ''} three`} onClick={() => {
                                         if (isMenuCard) {
                                             this.props.toggleLabel(listId, card.id, 'three')

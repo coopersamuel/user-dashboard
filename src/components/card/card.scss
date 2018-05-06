@@ -68,7 +68,7 @@
         font-size: .4rem;
         padding-left: 2.65rem;
         padding-top: .25rem;
-        opacity: .5;
+        opacity: .35;
 
         &.one {
             background-color: #3F88C5;
@@ -86,6 +86,10 @@
     &.active {
         opacity: 1;
     }
+}
+
+.hide-overflow {
+    overflow: hidden;
 }
 
 .menu-active {
