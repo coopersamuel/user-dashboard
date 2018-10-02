@@ -3,20 +3,23 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import UserHomepage from './components/UserHomepage/UserHomepage';
+import App from './components/App/App';
 
 import rootReducer from './reducers';
 import './styles.scss';
 
-const App = () => {
+const Root = () => {
     let store = createStore(rootReducer, composeWithDevTools());
 
     return (
         <Provider store={store}>
-            <UserHomepage />
+            <Router>
+                <Route path='/' component={App} />
+            </Router>
         </Provider>
     );
 }
 
-render(<App />, document.getElementById("root"));
+render(<Root />, document.getElementById("root"));
