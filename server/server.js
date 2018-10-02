@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const webpackMiddleware = require('webpack-dev-middleware');
+const webpack = require('webpack');
 const { dbUsername, dbPassword } = require('./config');
 
 // Create the express app
@@ -30,10 +32,11 @@ mongoose.connect(MONGO_URI, {
     process.exit();
 });
 
-// Route definitions
-app.get('/', (req, res) => {
-    res.json({ "message": "Welcome to app" });
-});
+// Webpack runs as a middleware.  If any request comes in for the root route ('/')
+// Webpack will respond with the output of the webpack process: an HTML file and
+// a single bundle.js output of all of our client side Javascript
+const webpackConfig = require('../webpack.config.js');
+app.use(webpackMiddleware(webpack(webpackConfig)));
 
 // Require users routes and pass it the express app
 require('./routes.js')(app);

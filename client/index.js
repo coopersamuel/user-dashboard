@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+import UserHomepage from './components/UserHomepage/UserHomepage';
+
 import rootReducer from './reducers';
 import './styles.scss';
 
@@ -12,9 +14,7 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <div>
-                Boilerplate!
-            </div>
+            <UserHomepage />
         </Provider>
     );
 }
