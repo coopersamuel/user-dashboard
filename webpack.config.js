@@ -6,7 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 // Constant with our paths
 const paths = {
     DIST : path.resolve(__dirname, 'dist'),
-    SRC : path.resolve(__dirname, 'src')
+    SRC : path.resolve(__dirname, 'client')
 };
 
 module.exports = {
