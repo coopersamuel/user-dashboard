@@ -5,11 +5,11 @@ const Navbar = (props) => {
     return (
         <header className="navbar">
             <section className="navbar-section">
-                <h3>Shaka Demo</h3>
+                <h5 className="text-bold pt-2">Shaka Demo</h5>
             </section>
             <section className="navbar-section">
-                <Link to='/home' className="btn btn-link">User Home</Link>
-                <Link to='/away' className="btn btn-link">User Away</Link>
+                <Link to='/login' className="btn btn-link">Login</Link>
+                <Link to='/signup' className="btn btn-link">Signup</Link>
             </section>
         </header>
     );

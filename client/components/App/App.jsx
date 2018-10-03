@@ -1,16 +1,55 @@
 import React from 'react';
-import Navbar from '../Navbar/Navbar';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Route } from 'react-router-dom';
 
-const App = (props) => {
-    return (
-        <div>
-            <Navbar />
-            <Route path='/home' component={() => <div>Hello</div>} />
-            <Route path='/away' component={() => <div>Goodbye</div>} />
-        </div>
-    );
+import Navbar from '../Navbar/Navbar';
+import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
+import { createUser } from '../../actions/actions';
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.onSignup = this.onSignup.bind(this);
+    }
+
+    onSignup({ email, password}) {
+        this.props.createUser(email, password);
+    }
+
+    render() {
+        return (
+            <div className="container grid-lg my-2">
+                <Navbar />
+                <div className="columns">
+                    <div className="column col-6 centered">
+                        <Route 
+                            path='/login'
+                            render={(props) => <Login {...props} onLogin={null} />}
+                        />
+                        <Route 
+                            path='/signup' 
+                            render={(props) => <Signup {...props} onSignup={this.onSignup} />} 
+                        />
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        // return state here
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        createUser
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,17 +1,22 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import App from './components/App/App';
 
+import { asyncMiddleware } from './middleware';
 import rootReducer from './reducers';
 import './styles.scss';
 
 const Root = () => {
-    let store = createStore(rootReducer, composeWithDevTools());
+    let middleware = composeWithDevTools(applyMiddleware(asyncMiddleware));
+    let store = createStore(
+        rootReducer, 
+        middleware
+    );
 
     return (
         <Provider store={store}>
