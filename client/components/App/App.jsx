@@ -31,7 +31,7 @@ class App extends React.Component {
                         />
                         <Route 
                             path='/signup' 
-                            render={(props) => <Signup {...props} onSignup={this.onSignup} />} 
+                            render={(props) => <Signup {...props} onSignup={this.onSignup} errors={this.props.createUserError} />} 
                         />
                     </div>
                 </div>
@@ -42,7 +42,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        // return state here
+        createUserError: state.createUserReducer
     };
 }
 

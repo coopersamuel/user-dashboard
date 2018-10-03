@@ -8,10 +8,20 @@ import axios from 'axios';
 
 export const createUser = (email, password) => {
     return asyncAction(axios.post('/users', { email, password })
-            .then(createUserSuccess(response.data))
-            .catch(createUserFailure(response.data)));
+            .then(createUserSuccess)
+            .catch(createUserFailure));
 };
 
 export const createUserSuccess = user => {
-    // Set state to show that the user was successfully created
+    return {
+        type: ActionTypes.CREATE_USER_SUCCESS
+    }
 };
+
+export const createUserFailure = response => {
+    return {
+        type: ActionTypes.CREATE_USER_FAILURE,
+        payload: response.response.data.message
+    }
+}
+
