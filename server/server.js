@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
+const history = require('connect-history-api-fallback');
 const mongoose = require('mongoose');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
@@ -7,6 +9,7 @@ const { dbUsername, dbPassword } = require('./config');
 
 // Create the express app
 const app = express();
+app.use(history());
 
 // Parse requests of content-type - application/x-www-form-urlencoded
 app.unsubscribe(bodyParser.urlencoded( { extended: true }));
@@ -36,7 +39,9 @@ mongoose.connect(MONGO_URI, {
 // Webpack will respond with the output of the webpack process: an HTML file and
 // a single bundle.js output of all of our client side Javascript
 const webpackConfig = require('../webpack.config.js');
-app.use(webpackMiddleware(webpack(webpackConfig)));
+app.use(webpackMiddleware(webpack(webpackConfig), {
+    publicPath: webpackConfig.output.publicPath
+}));
 
 // Require users routes and pass it the express app
 require('./routes.js')(app);

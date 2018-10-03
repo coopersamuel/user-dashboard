@@ -13,9 +13,10 @@ module.exports = {
     mode: 'development',
     devtool: 'source-map',
     entry: ['babel-polyfill', path.join(paths.SRC, "index.js")],
-    output : {
-        path : paths.DIST,
-        filename : '[name].bundle.js'
+    output: {
+        path: paths.DIST,
+        filename: '[name].bundle.js',
+        publicPath: '/'
     },
     optimization: {
         splitChunks: {
@@ -72,6 +73,7 @@ module.exports = {
         extensions: [".js", ".jsx"]
     },
     devServer: {
-        port: 3001
+        port: 3000,
+        historyApiFallback: true
     }
 };
