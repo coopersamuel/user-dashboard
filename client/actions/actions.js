@@ -8,14 +8,15 @@ import axios from 'axios';
 
 export const createUser = (email, password) => {
     return asyncAction(axios.post('/users', { email, password })
+            .then(response => response.data)
             .then(createUserSuccessActions)
             .catch(createUserFailure));
 };
 
-const createUserSuccessActions = () => {
+const createUserSuccessActions = data => {
     return dispatch => {
         dispatch(createUserSuccess());
-        dispatch(login());
+        dispatch(login(data));
     }
 };
 
@@ -32,9 +33,10 @@ export const createUserFailure = response => {
     }
 }
 
-export const login = () => {
+export const login = data => {
     return {
-        type: ActionTypes.LOGIN
+        type: ActionTypes.LOGIN,
+        payload: data
     }
 };
 
@@ -46,6 +48,7 @@ export const logout = () => {
 
 export const authenticateUser = (email, password) => {
     return asyncAction(axios.post('/authenticate', { email, password })
+            .then(response => response.data)
             .then(login)
             .catch(loginFailure));
 };

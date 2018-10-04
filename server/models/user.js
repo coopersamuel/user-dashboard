@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
     email: String,
     password: String, 
-    isAdmin: Boolean
+    isAdmin: { type: Boolean, default: false }
 }, { collection: 'users' });
 
 module.exports = mongoose.model('user', UserSchema);

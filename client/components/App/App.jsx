@@ -49,7 +49,7 @@ class App extends React.Component {
                             path='/dashboard' 
                             render={(props) => {
                                 const DashboardWithAuth = requireAuth(Dashboard);
-                                return <DashboardWithAuth {...props} isLoggedIn={this.props.isLoggedIn} />;
+                                return <DashboardWithAuth {...props} isLoggedIn={this.props.isLoggedIn} isAdmin={this.props.isAdmin} />;
                             }} 
                         />
                     </div>
@@ -63,7 +63,8 @@ function mapStateToProps(state) {
     return {
         createUserError: state.createUserReducer,
         isLoggedIn: state.loginReducer.isLoggedIn ? state.loginReducer.isLoggedIn : null,
-        loginError: state.loginReducer.loginError ? state.loginReducer.loginError : null
+        loginError: state.loginReducer.loginError ? state.loginReducer.loginError : null,
+        isAdmin: state.loginReducer.isAdmin
     };
 }
 
