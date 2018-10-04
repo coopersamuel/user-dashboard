@@ -7,7 +7,7 @@ import Navbar from '../Navbar/Navbar';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
 import Dashboard from '../Dashboard/Dashboard';
-import requireAuth from '../HOC/requireAuth';
+import Auth from '../Auth/Auth';
 import { createUser, authenticateUser, logout } from '../../actions/actions';
 
 class App extends React.Component {
@@ -45,13 +45,9 @@ class App extends React.Component {
                             path='/signup' 
                             render={(props) => <Signup {...props} onSignup={this.onSignup} isLoggedIn={this.props.isLoggedIn} errors={this.props.createUserError} />} 
                         />
-                        <Route 
-                            path='/dashboard' 
-                            render={(props) => {
-                                const DashboardWithAuth = requireAuth(Dashboard);
-                                return <DashboardWithAuth {...props} isLoggedIn={this.props.isLoggedIn} isAdmin={this.props.isAdmin} />;
-                            }} 
-                        />
+                    </div>
+                    <div className="column col-12">
+                        <Route render={(props) => <Auth {...props} isLoggedIn={this.props.isLoggedIn} userInformation={this.props.userInformation} />} />
                     </div>
                 </div>
             </div>
@@ -64,7 +60,7 @@ function mapStateToProps(state) {
         createUserError: state.createUserReducer,
         isLoggedIn: state.loginReducer.isLoggedIn ? state.loginReducer.isLoggedIn : null,
         loginError: state.loginReducer.loginError ? state.loginReducer.loginError : null,
-        isAdmin: state.loginReducer.isAdmin
+        userInformation: { isAdmin: state.loginReducer.isAdmin, email: state.loginReducer.email }
     };
 }
 

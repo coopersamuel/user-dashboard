@@ -9,11 +9,14 @@ module.exports = (app) => {
     // Create a new user
     app.post('/users', users.create);
 
-    // Retrieve one user
+    // Retrieve and authenticate one user
     app.post('/authenticate', users.authenticate);
 
     // Retrieve all users
     app.get('/users', users.findAll);
+
+    // Retrieve users paginated
+    app.get('/users/:page', users.findUsersPaginated);
 
     // Update a user with a userId
     app.put('/users/:userId', users.update);

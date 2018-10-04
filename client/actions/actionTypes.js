@@ -11,3 +11,5 @@ export const LOGOUT = 'LOGOUT';
 export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const FETCH_USERS = 'FETCH_USERS';
+export const LOAD_USERS = 'LOAD_USERS';

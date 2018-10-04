@@ -1,17 +1,28 @@
 import React from 'react';
+import AdminPanel from '../AdminPanel/AdminPanel';
 
 const Dashboard = (props) => {
+    if (!props.userInformation) {
+        return <div></div>;
+    }
+
     return (
-        <div className="empty">
-            <p className="empty-title h5">Welcome to the dashboard!</p>
-            {props.isAdmin &&
-                <div className="empty-action">
-                    <button className="btn btn-primary">Send a message</button>
+        <div>
+            <div className="empty">
+                <p className="empty-title h5">Welcome to the dashboard {props.userInformation.email}!</p>
+                {props.userInformation.isAdmin &&
+                    <p className="empty-subtitle">As an admin, you can edit and delete users</p>
+
+                    ||
+
+                    <p className="empty-subtitle">There's not much else you can do.</p>
+                }
+            </div>
+            {props.userInformation.isAdmin &&
+                <div>
+                    <div className="divider"></div>
+                    <AdminPanel />
                 </div>
-
-                ||
-
-                <p className="empty-subtitle">There's not much else you can do.</p>
             }
         </div>
     );

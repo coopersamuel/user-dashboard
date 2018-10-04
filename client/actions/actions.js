@@ -59,3 +59,12 @@ export const loginFailure = response => {
         payload: response.response.data.message
     }
 };
+
+export const fetchUsers = page => asyncAction(axios.get(`/users/${page}`).then(response => response.data).then(loadUsers));
+
+export const loadUsers = users => {
+    return {
+        type: ActionTypes.LOAD_USERS,
+        payload: users
+    }
+}

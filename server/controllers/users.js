@@ -41,6 +41,16 @@ exports.findAll = (req, res) => {
         });
 };
 
+// Same as findAll, but here the results will be paginated
+exports.findUsersPaginated = (req, res) => {
+    User.paginate({}, { page: req.params.page, limit: 10 })
+        .then(users => {
+            res.send(users);
+        }).catch(error => {
+            message: error.message || 'Error occurred while retrieving users'
+        }); 
+};
+
 // Update a user given a userId in the request
 exports.update = (req, res) => {
     // Find a user and update it with the request body
