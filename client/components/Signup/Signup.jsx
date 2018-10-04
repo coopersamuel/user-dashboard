@@ -1,7 +1,12 @@
 import React from 'react';
 import Form from '../Form/Form';
+import { Redirect } from 'react-router';
 
 const Signup = (props) => {
+    if (props.isLoggedIn) {
+        return <Redirect to='/dashboard' />
+    }
+
     return (
         <div>
             <div className="card">

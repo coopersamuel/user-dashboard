@@ -1,3 +1,5 @@
 import asyncMiddleware from './asyncMiddleware';
 
-export { asyncMiddleware };
+export { 
+    asyncMiddleware
+};

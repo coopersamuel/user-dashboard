@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
+import Dashboard from '../Dashboard/Dashboard';
 import { createUser } from '../../actions/actions';
 
 class App extends React.Component {
@@ -31,7 +32,11 @@ class App extends React.Component {
                         />
                         <Route 
                             path='/signup' 
-                            render={(props) => <Signup {...props} onSignup={this.onSignup} errors={this.props.createUserError} />} 
+                            render={(props) => <Signup {...props} onSignup={this.onSignup} isLoggedIn={this.props.isLoggedIn} errors={this.props.createUserError} />} 
+                        />
+                        <Route 
+                            path='/dashboard' 
+                            render={(props) => <Dashboard {...props} />} 
                         />
                     </div>
                 </div>
@@ -42,7 +47,8 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        createUserError: state.createUserReducer
+        createUserError: state.createUserReducer,
+        isLoggedIn: state.loginReducer
     };
 }
 

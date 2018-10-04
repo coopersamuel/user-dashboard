@@ -8,8 +8,15 @@ import axios from 'axios';
 
 export const createUser = (email, password) => {
     return asyncAction(axios.post('/users', { email, password })
-            .then(createUserSuccess)
+            .then(loginActions)
             .catch(createUserFailure));
+};
+
+const loginActions = () => {
+    return dispatch => {
+        dispatch(createUserSuccess());
+        dispatch(login());
+    }
 };
 
 export const createUserSuccess = user => {
@@ -24,4 +31,14 @@ export const createUserFailure = response => {
         payload: response.response.data.message
     }
 }
+
+export const login = () => {
+    return {
+        type: ActionTypes.LOGIN
+    }
+};
+
+export const logout = () => {
+    // TODO
+};
 
