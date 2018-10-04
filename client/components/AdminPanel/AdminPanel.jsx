@@ -15,13 +15,12 @@ class AdminPanel extends React.Component {
     }
 
     componentDidMount() {
+        // Fetch the first page of users when the component mounts
         this.props.fetchUsers(1);
-        console.log('called');
     }
 
     fetchPage(page) {
-        console.log('made it');
-        console.log(page);
+        this.props.fetchUsers(page);
     }
 
     render() {
@@ -38,7 +37,9 @@ class AdminPanel extends React.Component {
                         <UserTile key={user._id} user={user} /> 
                     );
                 })}
-                <Pagination numPages={totalPages} totalEntries={totalEntries} currentPage={currentPage} onPageClick={this.fetchPage} />
+                <div className="column col-6 col-mx-auto">
+                    <Pagination numPages={totalPages} totalEntries={totalEntries} currentPage={currentPage} onPageClick={this.fetchPage} />                
+                </div>
             </div>
         );
     }
@@ -47,7 +48,7 @@ class AdminPanel extends React.Component {
 function mapStateToProps(state) {
     return {
         users: state.usersReducer.docs,
-        currentPage: state.usersReducer.page,
+        currentPage: parseInt(state.usersReducer.page),
         totalPages: state.usersReducer.pages,
         totalEntries: state.usersReducer.total
     };
