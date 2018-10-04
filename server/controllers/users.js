@@ -81,3 +81,28 @@ exports.delete = (req, res) => {
             });
         });
 };
+
+// Authenticate one user from the collection given the user's email and password
+// This is used when a user tries to login
+exports.authenticate = (req, res) => {
+    User.findOne({ email: req.body.email })
+    .then(user => {
+        if (!user) {
+            return res.status(400).send({
+                message: 'This email doesn\'t exist in our database. Try signing up instead.'
+            });            
+        }
+
+        if (user.password !== req.body.password) {
+            return res.status(400).send({
+                message: 'Invalid password.'
+            });
+        } else {
+            res.send(user);
+        }
+    }).catch(error => {
+        return res.status(500).send({
+            message: `Error finding user.`
+        });
+    });
+};

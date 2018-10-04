@@ -9,6 +9,9 @@ module.exports = (app) => {
     // Create a new user
     app.post('/users', users.create);
 
+    // Retrieve one user
+    app.post('/authenticate', users.authenticate);
+
     // Retrieve all users
     app.get('/users', users.findAll);
 

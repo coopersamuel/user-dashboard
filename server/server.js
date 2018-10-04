@@ -17,8 +17,6 @@ app.unsubscribe(bodyParser.urlencoded( { extended: true }));
 // Parse requests of content-type - application/json
 app.use(bodyParser.json());
 
-
-
 // Mongoose promise is deprecated, replace it
 mongoose.Promise = global.Promise;
 

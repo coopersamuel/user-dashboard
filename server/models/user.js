@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
+// Every user has an email, a password and an isAdmin indicator
+// As of now, the passwords are stored in plaintext -
+// This would NEVER be the case in a production application
 const UserSchema = mongoose.Schema({
     email: String,
-    password: String,  // TODO - Will need to hash the passwords later
+    password: String, 
     isAdmin: Boolean
 }, { collection: 'users' });
 
