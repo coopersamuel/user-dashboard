@@ -7,6 +7,7 @@ import Navbar from '../Navbar/Navbar';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
 import Dashboard from '../Dashboard/Dashboard';
+import requireAuth from '../HOC/requireAuth';
 import { createUser } from '../../actions/actions';
 
 class App extends React.Component {
@@ -36,7 +37,10 @@ class App extends React.Component {
                         />
                         <Route 
                             path='/dashboard' 
-                            render={(props) => <Dashboard {...props} />} 
+                            render={(props) => {
+                                const DashboardWithAuth = requireAuth(Dashboard);
+                                return <DashboardWithAuth {...props} isLoggedIn={this.props.isLoggedIn} />;
+                            }} 
                         />
                     </div>
                 </div>
