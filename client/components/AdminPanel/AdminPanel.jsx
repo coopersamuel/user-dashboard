@@ -132,14 +132,9 @@ class AdminPanel extends React.Component {
                 {this.state.showModal &&
                     <UserModal onSubmitUser={this.onSubmitModal} selectedUser={this.state.selectedUserToUpdate} close={this.closeModal} />
                 }
-                {this.props.updateUserStatus.updateUserError &&
+                {this.props.error &&
                     <div className="toast toast-error">
-                        {this.props.updateUserStatus.message}
-                    </div>
-                }
-                {this.props.deleteUserStatus.deleteUserError &&
-                    <div className="toast toast-error">
-                        {this.props.deleteUserStatus.message}
+                        {this.props.message}
                     </div>
                 }
             </div>
@@ -153,8 +148,8 @@ function mapStateToProps(state) {
         currentPage: parseInt(state.usersReducer.page),
         totalPages: state.usersReducer.pages,
         totalEntries: state.usersReducer.total,
-        updateUserStatus: state.updateUserReducer, 
-        deleteUserStatus: state.deleteUserReducer
+        error: state.crudReducer.error,
+        message: state.crudReducer.message,
     };
 }
 

@@ -17,7 +17,7 @@ const Signup = (props) => {
                 <div className="card-body">
                     <Form onSubmit={props.onSignup} />
                 </div>
-                {props.errors.createUserError &&
+                {props.errors.error &&
                     <div className="card-footer">
                         <div>
                             <div className="toast toast-error">

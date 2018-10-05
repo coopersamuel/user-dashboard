@@ -43,7 +43,7 @@ class App extends React.Component {
                         />
                         <Route 
                             path='/signup' 
-                            render={(props) => <Signup {...props} onSignup={this.onSignup} isLoggedIn={this.props.isLoggedIn} errors={this.props.createUserError} />} 
+                            render={(props) => <Signup {...props} onSignup={this.onSignup} isLoggedIn={this.props.isLoggedIn} errors={this.props.errors} />} 
                         />
                     </div>
                     <div className="column col-12">
@@ -57,7 +57,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        createUserError: state.createUserReducer,
+        errors: state.crudReducer,
         isLoggedIn: state.loginReducer.isLoggedIn ? state.loginReducer.isLoggedIn : null,
         loginError: state.loginReducer.loginError ? state.loginReducer.loginError : null,
         userInformation: { isAdmin: state.loginReducer.isAdmin, email: state.loginReducer.email }
