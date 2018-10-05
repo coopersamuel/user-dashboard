@@ -9,7 +9,7 @@ const UserTile = (props) => {
                 <p className="tile-title">{email}</p>
             </div>
             {isAdmin && 
-                <span className="chip mt-1">Admin</span>
+                <span className="chip mt-1 mx-1">Admin</span>
             }
             <div className="tile-action mx-1">
                 <button 
@@ -20,7 +20,12 @@ const UserTile = (props) => {
                 </button>
             </div>
             <div className="tile-action mx-1">
-                <button className="btn btn-error">Remove</button>
+                <button 
+                    className="btn btn-error"
+                    onClick={() => props.onDeleteUser(props.user)}
+                >
+                    Remove
+                </button>
             </div>
         </div>
     );

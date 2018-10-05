@@ -71,7 +71,6 @@ export const loadUsers = users => {
 
 export const updateUser = (userId, email, password, isAdmin) => {
     return asyncAction(axios.put(`/users/${userId}`,  { email, password, isAdmin })
-            .then(response => response.data)
             .then(updateUserSuccess)
             .catch(updateUserFailure));
 };
@@ -85,6 +84,25 @@ export const updateUserSuccess = () => {
 export const updateUserFailure = response => {
     return {
         type: ActionTypes.UPDATE_USER_FAILURE,
+        payload: response.response.data.message
+    }
+};
+
+export const deleteUser = userId => {
+    return asyncAction(axios.delete(`/users/${userId}`)
+            .then(deleteUserSuccess)
+            .catch(deleteUserFailure));
+};
+
+export const deleteUserSuccess = () => {
+    return {
+        type: ActionTypes.DELETE_USER_SUCCESS
+    }
+};
+
+export const deleteUserFailure = response => {
+    return {
+        type: ActionTypes.DELETE_USER_FAILURE,
         payload: response.response.data.message
     }
 };

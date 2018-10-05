@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import UserTile from '../UserTile/UserTile';
 import UserModal from '../UserModal/UserModal';
 import Pagination from '../Pagination/Pagination';
-import { fetchUsers, updateUser } from '../../actions/actions';
+import { fetchUsers, updateUser, deleteUser } from '../../actions/actions';
 
 class AdminPanel extends React.Component {
     constructor(props) {
@@ -21,6 +21,7 @@ class AdminPanel extends React.Component {
         this.openUpdateModal = this.openUpdateModal.bind(this);
         this.submitUpdateUser = this.submitUpdateUser.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount() {
@@ -57,6 +58,13 @@ class AdminPanel extends React.Component {
         });
     }
 
+    deleteUser(user) {
+        this.props.deleteUser(user._id);
+
+        // Refetch the users
+        this.props.fetchUsers(this.props.currentPage);
+    }
+
     render() {
         if (!this.props.users) {
             return <div></div>;
@@ -66,21 +74,38 @@ class AdminPanel extends React.Component {
 
         return (
             <div>
+                <div className="tile">
+                    <div className="tile-content">
+                        <p className="tile-title">Filter Users</p>
+                    </div>
+                    <div className="tile-action mx-1">
+                        <button 
+                            className="btn"
+                            onClick={() => this.setState({ showModal: !this.state.showModal })}
+                        >
+                            + Add User
+                        </button>
+                    </div>
+                </div>
                 {users.map(user => {
                     return (
-                        <UserTile key={user._id} user={user} onUpdateUser={this.openUpdateModal} /> 
+                        <UserTile key={user._id} user={user} onUpdateUser={this.openUpdateModal} onDeleteUser={this.deleteUser} /> 
                     );
                 })}
                 <div className="column col-6 col-mx-auto">
                     <Pagination numPages={totalPages} totalEntries={totalEntries} currentPage={currentPage} onPageClick={this.fetchPage} />                
                 </div>
-                <button onClick={() => this.setState({ showModal: !this.state.showModal })}>MODAL</button>
                 {this.state.showModal &&
                     <UserModal onSubmitUser={this.submitUpdateUser} selectedUser={this.state.selectedUserToUpdate} close={this.closeModal} />
                 }
                 {this.props.updateUserStatus.updateUserError &&
                     <div className="toast toast-error">
                         {this.props.updateUserStatus.message}
+                    </div>
+                }
+                {this.props.deleteUserStatus.deleteUserError &&
+                    <div className="toast toast-error">
+                        {this.props.deleteUserStatus.message}
                     </div>
                 }
             </div>
@@ -94,14 +119,16 @@ function mapStateToProps(state) {
         currentPage: parseInt(state.usersReducer.page),
         totalPages: state.usersReducer.pages,
         totalEntries: state.usersReducer.total,
-        updateUserStatus: state.updateUserReducer 
+        updateUserStatus: state.updateUserReducer, 
+        deleteUserStatus: state.deleteUserReducer
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         fetchUsers,
-        updateUser
+        updateUser,
+        deleteUser
     }, dispatch);
 }
 
