@@ -51,6 +51,18 @@ exports.findUsersPaginated = (req, res) => {
         }); 
 };
 
+// Same as findAll, but here the results will be paginated and filtered
+exports.findUsersPaginatedAndFiltered = (req, res) => {
+    const filter = { email: { $regex: new RegExp(req.params.filterString, "i") } };
+
+    User.paginate(filter, { page: req.params.page, limit: 10 })
+        .then(users => {
+            res.send(users);
+        }).catch(error => {
+            message: error.message || 'Error occurred while retrieving users'
+        }); 
+};
+
 // Update a user given a userId in the request
 exports.update = (req, res) => {
     // Validate the request

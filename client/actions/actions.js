@@ -60,7 +60,17 @@ export const loginFailure = response => {
     }
 };
 
-export const fetchUsers = page => asyncAction(axios.get(`/users/${page}`).then(response => response.data).then(loadUsers));
+export const fetchUsers = (page, filterString) => {
+    let url = `/users/${page}`;
+
+    if (filterString) {
+        url += `/${filterString}`;
+    }
+
+    return asyncAction(axios.get(url)
+            .then(response => response.data)
+            .then(loadUsers));
+};
 
 export const loadUsers = users => {
     return {

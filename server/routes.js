@@ -18,6 +18,9 @@ module.exports = (app) => {
     // Retrieve users paginated
     app.get('/users/:page', users.findUsersPaginated);
 
+    // Retrieve users paginated and filtered
+    app.get('/users/:page/:filterString', users.findUsersPaginatedAndFiltered);
+
     // Update a user with a userId
     app.put('/users/:userId', users.update);
 

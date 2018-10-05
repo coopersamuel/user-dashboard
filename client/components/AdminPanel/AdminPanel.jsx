@@ -14,7 +14,8 @@ class AdminPanel extends React.Component {
 
         this.state = {
             showModal: false,
-            selectedUserToUpdate: {}
+            selectedUserToUpdate: {},
+            filterString: ''
         };
 
         this.fetchPage = this.fetchPage.bind(this);
@@ -26,11 +27,12 @@ class AdminPanel extends React.Component {
 
     componentDidMount() {
         // Fetch the first page of users when the component mounts
-        this.props.fetchUsers(1);
+        this.props.fetchUsers(1, null);
     }
 
     fetchPage(page) {
-        this.props.fetchUsers(page);
+        const filter = this.state.filterString !== '' ? this.state.filterString : null;
+        this.props.fetchUsers(page, filter);
     }
 
     openUpdateModal(user) {
@@ -74,19 +76,26 @@ class AdminPanel extends React.Component {
 
         return (
             <div>
-                <div className="tile">
-                    <div className="tile-content">
-                        <p className="tile-title">Filter Users</p>
-                    </div>
-                    <div className="tile-action mx-1">
+                <header className="navbar my-2">
+                    <section className="navbar-section">
+                        <div className="input-group input-inline">
+                            <input 
+                                className="form-input" type="text" placeholder="Filter users" 
+                                value={this.state.filterString}
+                                onChange={event => this.setState({ filterString: event.target.value })}
+                            />
+                            <button className={`btn btn-primary input-group-btn ${this.state.showModal ? 'disabled' : ''}`} onClick={this.fetchPage}>Filter</button>
+                        </div>
+                    </section>
+                    <section className="navbar-section">
                         <button 
                             className="btn"
                             onClick={() => this.setState({ showModal: !this.state.showModal })}
                         >
                             + Add User
                         </button>
-                    </div>
-                </div>
+                    </section>
+                </header>
                 {users.map(user => {
                     return (
                         <UserTile key={user._id} user={user} onUpdateUser={this.openUpdateModal} onDeleteUser={this.deleteUser} /> 
