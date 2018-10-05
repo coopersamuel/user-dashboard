@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 
-import Dashboard from '../Dashboard/Dashboard';
+import Dashboard from './Dashboard';
 
 // This component is a simple Auth wrapper to render routes
 // that are behind the "auth" wall.

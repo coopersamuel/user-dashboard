@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route } from 'react-router-dom';
 
-import Navbar from '../Navbar/Navbar';
-import Login from '../Login/Login';
-import Signup from '../Signup/Signup';
-import Dashboard from '../Dashboard/Dashboard';
-import Auth from '../Auth/Auth';
-import { createUser, authenticateUser, logout } from '../../actions/actions';
+import Navbar from './Navbar';
+import Login from './Login';
+import Signup from './Signup';
+import Dashboard from './Dashboard';
+import Auth from './Auth';
+import { createUser, authenticateUser, logout } from '../actions/actions';
 
 class App extends React.Component {
     constructor(props) {

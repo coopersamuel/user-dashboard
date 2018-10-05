@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../Form/Form';
+import Form from './Form';
 import { Redirect } from 'react-router';
 
 const Signup = (props) => {

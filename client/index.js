@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import App from './components/App/App';
+import App from './components/App';
 
 import { asyncMiddleware } from './middleware';
 import rootReducer from './reducers';

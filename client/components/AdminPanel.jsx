@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 
-import UserTile from '../UserTile/UserTile';
-import UserModal from '../UserModal/UserModal';
-import Pagination from '../Pagination/Pagination';
-import { fetchUsers, adminCreateUser, updateUser, deleteUser } from '../../actions/actions';
+import UserTile from './UserTile';
+import UserModal from './UserModal/UserModal';
+import Pagination from './Pagination/Pagination';
+import { fetchUsers, adminCreateUser, updateUser, deleteUser } from '../actions/actions';
 
 class AdminPanel extends React.Component {
     constructor(props) {
@@ -109,7 +109,7 @@ class AdminPanel extends React.Component {
                                 value={this.state.filterString}
                                 onChange={event => this.setState({ filterString: event.target.value })}
                             />
-                            <button className={`btn btn-primary input-group-btn ${this.state.showModal ? 'disabled' : ''}`} onClick={this.fetchPage}>Filter</button>
+                            <button className={`btn btn-primary input-group-btn ${this.state.showModal ? 'disabled' : ''}`} onClick={() => this.fetchPage(1)}>Filter</button>
                         </div>
                     </section>
                     <section className="navbar-section">
@@ -145,7 +145,7 @@ class AdminPanel extends React.Component {
 function mapStateToProps(state) {
     return {
         users: state.usersReducer.docs,
-        currentPage: parseInt(state.usersReducer.page),
+        currentPage: state.usersReducer.page,
         totalPages: state.usersReducer.pages,
         totalEntries: state.usersReducer.total,
         error: state.crudReducer.error,

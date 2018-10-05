@@ -43,7 +43,9 @@ exports.findAll = (req, res) => {
 
 // Same as findAll, but here the results will be paginated
 exports.findUsersPaginated = (req, res) => {
-    User.paginate({}, { page: req.params.page, limit: 10 })
+    const pageNum = parseInt(req.params.page);
+
+    User.paginate({}, { page: pageNum, limit: 10 })
         .then(users => {
             res.send(users);
         }).catch(error => {
@@ -53,9 +55,10 @@ exports.findUsersPaginated = (req, res) => {
 
 // Same as findAll, but here the results will be paginated and filtered
 exports.findUsersPaginatedAndFiltered = (req, res) => {
+    const pageNum = parseInt(req.params.page);
     const filter = { email: { $regex: new RegExp(req.params.filterString, "i") } };
 
-    User.paginate(filter, { page: req.params.page, limit: 10 })
+    User.paginate(filter, { page: pageNum, limit: 10 })
         .then(users => {
             res.send(users);
         }).catch(error => {
