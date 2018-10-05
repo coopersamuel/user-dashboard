@@ -116,3 +116,22 @@ export const deleteUserFailure = response => {
         payload: response.response.data.message
     }
 };
+
+export const adminCreateUser = (email, password, isAdmin) => {
+    return asyncAction(axios.post('/users', { email, password, isAdmin })
+            .then(adminCreateUserSuccess)
+            .catch(adminCreateUserFailure));
+};
+
+export const adminCreateUserSuccess = user => {
+    return {
+        type: ActionTypes.ADMIN_CREATE_USER_SUCCESS
+    }
+};
+
+export const adminCreateUserFailure = response => {
+    return {
+        type: ActionTypes.ADMIN_CREATE_USER_FAILURE,
+        payload: response.response.data.message
+    }
+}

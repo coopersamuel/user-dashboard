@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import UserTile from '../UserTile/UserTile';
 import UserModal from '../UserModal/UserModal';
 import Pagination from '../Pagination/Pagination';
-import { fetchUsers, updateUser, deleteUser } from '../../actions/actions';
+import { fetchUsers, adminCreateUser, updateUser, deleteUser } from '../../actions/actions';
 
 class AdminPanel extends React.Component {
     constructor(props) {
@@ -14,12 +14,15 @@ class AdminPanel extends React.Component {
 
         this.state = {
             showModal: false,
+            isCreatingNewUser: false,
             selectedUserToUpdate: {},
             filterString: ''
         };
 
         this.fetchPage = this.fetchPage.bind(this);
         this.openUpdateModal = this.openUpdateModal.bind(this);
+        this.onSubmitModal = this.onSubmitModal.bind(this);
+        this.submitCreateNewUser = this.submitCreateNewUser.bind(this);
         this.submitUpdateUser = this.submitUpdateUser.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
@@ -40,6 +43,28 @@ class AdminPanel extends React.Component {
             showModal: true,
             selectedUserToUpdate: user
         });
+    }
+
+    onSubmitModal(user) {
+        if (this.state.isCreatingNewUser) {
+            this.submitCreateNewUser(user);
+        } else {
+            this.submitUpdateUser(user);
+        }
+    }
+
+    async submitCreateNewUser(user) {
+        const { email, password, isAdmin } = user;
+        await this.props.adminCreateUser(email, password, isAdmin);
+
+        // Refetch the users
+        this.fetchPage(this.props.currentPage);
+
+        this.setState({
+            isCreatingNewUser: false
+        });
+
+        this.closeModal();
     }
 
     async submitUpdateUser(user) {
@@ -90,7 +115,7 @@ class AdminPanel extends React.Component {
                     <section className="navbar-section">
                         <button 
                             className="btn"
-                            onClick={() => this.setState({ showModal: !this.state.showModal })}
+                            onClick={() => this.setState({ showModal: !this.state.showModal, isCreatingNewUser: true })}
                         >
                             + Add User
                         </button>
@@ -105,7 +130,7 @@ class AdminPanel extends React.Component {
                     <Pagination numPages={totalPages} totalEntries={totalEntries} currentPage={currentPage} onPageClick={this.fetchPage} />                
                 </div>
                 {this.state.showModal &&
-                    <UserModal onSubmitUser={this.submitUpdateUser} selectedUser={this.state.selectedUserToUpdate} close={this.closeModal} />
+                    <UserModal onSubmitUser={this.onSubmitModal} selectedUser={this.state.selectedUserToUpdate} close={this.closeModal} />
                 }
                 {this.props.updateUserStatus.updateUserError &&
                     <div className="toast toast-error">
@@ -136,6 +161,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         fetchUsers,
+        adminCreateUser,
         updateUser,
         deleteUser
     }, dispatch);
