@@ -40,13 +40,13 @@ class AdminPanel extends React.Component {
         });
     }
 
-    submitUpdateUser(user) {
+    async submitUpdateUser(user) {
         const { email, password, isAdmin } = user;
         const userId = this.state.selectedUserToUpdate._id;
-        this.props.updateUser(userId, email, password, isAdmin);
+        await this.props.updateUser(userId, email, password, isAdmin);
 
         // Refetch the users
-        this.props.fetchUsers(this.props.currentPage);
+        this.fetchPage(this.props.currentPage);
 
         this.closeModal();
     }
@@ -58,11 +58,11 @@ class AdminPanel extends React.Component {
         });
     }
 
-    deleteUser(user) {
-        this.props.deleteUser(user._id);
+    async deleteUser(user) {
+        await this.props.deleteUser(user._id);
 
         // Refetch the users
-        this.props.fetchUsers(this.props.currentPage);
+        this.fetchPage(this.props.currentPage);
     }
 
     render() {
