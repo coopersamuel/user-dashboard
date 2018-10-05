@@ -8,8 +8,19 @@ const UserTile = (props) => {
             <div className="tile-content">
                 <p className="tile-title">{email}</p>
             </div>
-            <div className="tile-action">
-                <button className="btn btn-primary">Join</button>
+            {isAdmin && 
+                <span className="chip mt-1">Admin</span>
+            }
+            <div className="tile-action mx-1">
+                <button 
+                    className="btn btn-primary"
+                    onClick={() => props.onUpdateUser(props.user)}
+                >
+                    Edit
+                </button>
+            </div>
+            <div className="tile-action mx-1">
+                <button className="btn btn-error">Remove</button>
             </div>
         </div>
     );

@@ -68,3 +68,23 @@ export const loadUsers = users => {
         payload: users
     }
 }
+
+export const updateUser = (userId, email, password, isAdmin) => {
+    return asyncAction(axios.put(`/users/${userId}`,  { email, password, isAdmin })
+            .then(response => response.data)
+            .then(updateUserSuccess)
+            .catch(updateUserFailure));
+};
+
+export const updateUserSuccess = () => {
+    return {
+        type: ActionTypes.UPDATE_USER_SUCCESS
+    }
+};
+
+export const updateUserFailure = response => {
+    return {
+        type: ActionTypes.UPDATE_USER_FAILURE,
+        payload: response.response.data.message
+    }
+};

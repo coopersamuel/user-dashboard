@@ -53,6 +53,13 @@ exports.findUsersPaginated = (req, res) => {
 
 // Update a user given a userId in the request
 exports.update = (req, res) => {
+    // Validate the request
+    if (!req.body.email || !req.body.password) {
+        return res.status(400).send({
+            message: 'Must include email and password'
+        });
+    }
+
     // Find a user and update it with the request body
     User.findByIdAndUpdate(req.params.userId, {
         email: req.body.email,
